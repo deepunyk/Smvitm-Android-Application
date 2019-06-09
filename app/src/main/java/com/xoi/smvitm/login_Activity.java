@@ -124,7 +124,7 @@ public class login_Activity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("givenName", givenName).apply();
         sharedPreferences.edit().putString("stud_usn", stud_usn).apply();
-        sharedPreferences.edit().putString("email", email).apply();
+        sharedPreferences.edit().putString("Student Email", email).apply();
         sharedPreferences.edit().putString("id", id).apply();;
     }
 }
