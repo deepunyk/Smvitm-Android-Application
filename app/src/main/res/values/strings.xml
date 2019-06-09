@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Smvitm</string>
+    <string-array name="branch_name">
+        <item>Computer Science</item>
+        <item>Electronics</item>
+        <item>Mechanical</item>
+        <item>Civil</item>
+    </string-array>
+    <string-array name="login">
+        <item>Timetable</item>
+        <item>Academic calender</item>
+        <item>Old question papers</item>
+        <item>Circulars</item>
+        <item>Bus timings</item>
+    </string-array>
+    <string name="title_activity_try">Try</string>
+
+</resources>
