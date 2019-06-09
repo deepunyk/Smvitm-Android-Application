@@ -153,27 +153,37 @@
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/semester"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/spinner" />
+        app:layout_constraintTop_toTopOf="@+id/semester" />
 
-    <Spinner
-        android:id="@+id/spinner"
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/semester"
         android:layout_width="0dp"
+        app:ms_background_color="@color/white"
+        app:ms_text_color="@color/colorPrimary"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
-    <Spinner
-        android:id="@+id/spinner2"
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/section"
         android:layout_width="0dp"
+        app:ms_background_color="@color/white"
+        app:ms_text_color="@color/colorPrimary"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -188,13 +198,13 @@
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner2"
+        app:layout_constraintBottom_toBottomOf="@+id/section"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/spinner2" />
+        app:layout_constraintTop_toTopOf="@+id/section" />
 
     <com.dd.processbutton.iml.ActionProcessButton
-        android:id="@+id/button"
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -205,11 +215,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:pb_colorComplete="@color/white"
         app:pb_colorError="@color/red"
         app:pb_colorNormal="@color/white"
         app:pb_colorPressed="@color/white"
         app:pb_colorProgress="@color/white"
-        app:pb_textComplete="Timetable updated"
+        app:pb_textComplete="Done"
         app:pb_textError="Error"
         app:pb_textProgress="Submitting user details" />
 

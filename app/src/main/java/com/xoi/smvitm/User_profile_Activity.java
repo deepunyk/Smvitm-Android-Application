@@ -51,14 +51,17 @@ public class User_profile_Activity extends AppCompatActivity {
         section = (TextView)findViewById(R.id.section);
 
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        String def_usn = sharedPreferences.getString("stud_usn", "");
-        student_usn = "4MW17CS011";
+        student_usn = sharedPreferences.getString("stud_usn", "");
 
         String detail_check = sharedPreferences.getString("User details", "");
         if(detail_check.equals("1")){
 
             student_section = sharedPreferences.getString("Student section", "");
             student_branch = sharedPreferences.getString("Student branch", "");
+            student_sem = sharedPreferences.getString("Student sem", "");
+            student_name = sharedPreferences.getString("Student name", "");
+            student_usn = sharedPreferences.getString("Student usn", "");
+
             usn.setText(student_usn);
             sem.setText(student_sem);
             section.setText(student_section);
@@ -114,7 +117,6 @@ public class User_profile_Activity extends AppCompatActivity {
     private void  refreshUserInfo() {
 
         loading = ProgressDialog.show(this,"Fetching student details","Please wait");
-        student_usn = "4MW17CS011";
         final String studName = student_usn;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxIVco5JVe3XJhe0JNEl1zPSCJO-2FFYT6YE1FW8d58VSUUCV8/exec",
