@@ -24,79 +24,155 @@
     <ImageView
         android:id="@+id/user_profile_image"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.009"
         app:srcCompat="@drawable/user_profile_icon" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:gravity="start"
         android:includeFontPadding="false"
         android:text="Name"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile_image" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline21" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="start"
+        android:layout_marginStart="8dp"
+        android:text="name"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+
+    <TextView
+        android:id="@+id/usn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="start"
+        android:text="usn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:gravity="start"
         android:includeFontPadding="false"
         android:text="USN"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/usn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <TextView
-        android:id="@+id/usn"
+        android:id="@+id/sem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:gravity="start"
         android:inputType="textCapCharacters"
+        android:text="semester"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/textView5"
         app:met_underlineColor="@color/white" />
 
 
@@ -104,134 +180,122 @@
         android:id="@+id/textView5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
         android:gravity="start"
         android:includeFontPadding="false"
         android:text="Semester"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/sem"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/sem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="start"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/usn" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:gravity="start"
-        android:includeFontPadding="false"
-        android:text="Branch"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/branch"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline26" />
 
     <TextView
         android:id="@+id/branch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginStart="8dp"
         android:gravity="start"
+        android:text="branch"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/sem" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/textView6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
         android:gravity="start"
         android:includeFontPadding="false"
-        android:text="Section"
+        android:text="Branch"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/section"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
 
     <TextView
         android:id="@+id/section"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginStart="8dp"
         android:gravity="start"
+        android:text="section"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintStart_toStartOf="@+id/branch" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:includeFontPadding="false"
+        android:text="Section"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline28" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
 
     <Button
         android:id="@+id/btnRefresh"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
         android:text="Refresh"
-        app:layout_constraintBottom_toBottomOf="@+id/btnGet"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnGet" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/btnGet"
-        android:layout_width="wrap_content"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
         android:text="PUSH"
-        app:layout_constraintBottom_toBottomOf="@+id/signOut"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
         app:layout_constraintEnd_toStartOf="@+id/btnRefresh"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/signOut" />
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/btnRefresh" />
 
     <Button
         android:id="@+id/signOut"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="64dp"
+        android:background="@color/colorPrimary"
         android:text="Sign out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnGet"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toEndOf="@+id/btnRefresh"
+        app:layout_constraintTop_toTopOf="@+id/btnRefresh" />
 
 </android.support.constraint.ConstraintLayout>
