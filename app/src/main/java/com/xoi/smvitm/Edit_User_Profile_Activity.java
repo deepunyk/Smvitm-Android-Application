@@ -110,6 +110,12 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                         if (response.equals("Success")) {
                             submit.setProgress(100);
                             sharedPreferences.edit().putString("User details", "1").apply();
+                            sharedPreferences.edit().putString("Student name", student_name).apply();
+                            sharedPreferences.edit().putString("Student branch", student_branch).apply();
+                            sharedPreferences.edit().putString("Student sem", student_semester).apply();
+                            sharedPreferences.edit().putString("Student usn", student_usn).apply();
+                            sharedPreferences.edit().putString("Student section", student_section).apply();
+                            sharedPreferences.edit().putString("Student Email", student_email).apply();
                             Intent go = new Intent(Edit_User_Profile_Activity.this, User_profile_Activity.class);
                             startActivity(go);
                             finish();
