@@ -12,9 +12,13 @@
         android:id="@+id/branch_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/day_select"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:ms_background_color="@color/colorPrimary"
         app:ms_text_color="@color/white" />
 
@@ -23,8 +27,12 @@
         android:id="@+id/day_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:textSize="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:ms_background_color="@color/colorPrimary"
         app:ms_text_color="@color/white" />
@@ -41,10 +49,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.08" />
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -81,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_end="60dp" />
 
 
     <com.dd.processbutton.iml.ActionProcessButton
@@ -89,13 +98,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Sync with server"
         android:textColor="@android:color/white"
         android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
         app:pb_colorComplete="@color/colorPrimary"
         app:pb_colorError="@color/red"
         app:pb_colorNormal="@color/colorPrimary"
@@ -104,4 +116,5 @@
         app:pb_textComplete="Timetable updated"
         app:pb_textError="Error"
         app:pb_textProgress="Updating the timetable" />
+
 </android.support.constraint.ConstraintLayout>
