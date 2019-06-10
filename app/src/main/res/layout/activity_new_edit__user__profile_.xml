@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Edit_User_Profile_Activity">
+    tools:context=".Edit_New_User_Profile_Activity">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"

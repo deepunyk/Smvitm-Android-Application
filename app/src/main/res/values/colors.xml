@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary"> #5e35b1 </color>
     <color name="menuIcon_selcted">#C0C0C0</color>
-    <color name="main_menu1"> #ff6f00 </color>
-    <color name="main_menu3"> #c62828 </color>
+    <color name="main_menu1">#7C1336</color>
+    <color name="main_menu3"> #7c137c </color>
     <color name="colorPrimaryDark">#4527a0</color>
     <color name="colorAccent">#ff8f00</color>
     <color name="white">#FFFFFF</color>

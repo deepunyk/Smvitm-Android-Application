@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,7 +31,7 @@ import java.util.Map;
 public class User_profile_Activity extends AppCompatActivity {
 
     TextView name, branch, sem, section,usn;
-    Button btnRefresh, btnGet, signOut;
+    Button btnRefresh, btnEdit;
     ProgressDialog loading;
     Toolbar toolbar;
     String student_name, student_usn, student_branch, student_sem, student_section;
@@ -73,19 +72,8 @@ public class User_profile_Activity extends AppCompatActivity {
         }
 
         btnRefresh = (Button)findViewById(R.id.btnRefresh);
-        btnGet = (Button)findViewById(R.id.btnGet);
-        signOut = (Button)findViewById(R.id.signOut);
+        btnEdit = (Button)findViewById(R.id.btnEdit);
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferences.edit().putString("login_Activity", "0").apply();
-                FirebaseAuth.getInstance().signOut();
-                Intent go = new Intent(User_profile_Activity.this, login_Activity.class);
-                startActivity(go);
-                finish();
-            }
-        });
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back_icon));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,7 +82,7 @@ public class User_profile_Activity extends AppCompatActivity {
                 Intent main = new Intent(User_profile_Activity.this, MainActivity.class);
                 startActivity(main);
                 finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
             }
         });
         toolbar.setTitle("User Profile");
@@ -105,10 +93,13 @@ public class User_profile_Activity extends AppCompatActivity {
             }
         });
 
-        btnGet.setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getItems();
+                Intent go = new Intent(User_profile_Activity.this, Edit_Existing_User_Profile_Activity.class);
+                startActivity(go);
+                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             }
         });
 
@@ -124,9 +115,10 @@ public class User_profile_Activity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if(response.equals("No user found")){
-                            Intent go = new Intent(User_profile_Activity.this, Edit_User_Profile_Activity.class);
+                            Intent go = new Intent(User_profile_Activity.this, Edit_New_User_Profile_Activity.class);
                             startActivity(go);
                             finish();
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
                         }
                         else {
                             student_name = response.substring(0, response.indexOf(","));

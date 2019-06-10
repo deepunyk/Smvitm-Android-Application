@@ -6,14 +6,13 @@
         title="Home"
         barColorWhenSelected = "@color/main_menu1"/>
     <tab
-        id="@+id/tab_timetable"
-        icon="@drawable/timetable_icon"
-        title="Timetable"
-        barColorWhenSelected = "@color/colorPrimary"/>
-
-    <tab
         id="@+id/tab_circular"
         icon="@drawable/ic_newspaper"
         title="Circulars"
         barColorWhenSelected = " @color/main_menu3 "/>
+    <tab
+        id="@+id/tab_timetable"
+        icon="@drawable/timetable_icon"
+        title="Timetable"
+        barColorWhenSelected = "@color/colorPrimary"/>
 </tabs>

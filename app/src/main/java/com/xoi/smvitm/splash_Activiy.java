@@ -41,7 +41,6 @@ public class splash_Activiy extends AppCompatActivity {
         img.setImageDrawable(animation);
         animation.start();
 
-
         if (internet) {
             login = sharedPreferences.getString("login_Activity", "0");
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
@@ -55,11 +54,12 @@ public class splash_Activiy extends AppCompatActivity {
                         Intent go = new Intent(splash_Activiy.this, login_Activity.class);
                         startActivity(go);
                         finish();
-                        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
                     } else {
                         Intent go = new Intent(splash_Activiy.this, MainActivity.class);
                         startActivity(go);
                         finish();
+                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
                     }
                 }
             }, 1500);

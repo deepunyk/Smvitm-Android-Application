@@ -88,37 +88,41 @@ public class login_Activity extends AppCompatActivity {
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        String personGivenName = acct.getGivenName();
-        String stud_usn = acct.getEmail().substring(acct.getEmail().indexOf(".") + 1, acct.getEmail().indexOf("@"));
-        stud_usn = "4MW" + stud_usn.toUpperCase();
-        final String personEmail = acct.getEmail();
-        String personId = acct.getId();
-        store(personGivenName,stud_usn,personEmail,personId);
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        loading.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            try {
-                                String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
-                                SharedPreferences sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-                                sharedPreferences.edit().putString("login_Activity", "1").apply();
-                                Intent go = new Intent(login_Activity.this, MainActivity.class);
-                                startActivity(go);
-                                finish();
-                                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                            }
-                            catch (Exception e){
-                                Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
-                            }
+        try {
+            String personGivenName = acct.getGivenName();
+            String stud_usn = acct.getEmail().substring(acct.getEmail().indexOf(".") + 1, acct.getEmail().indexOf("@"));
+            stud_usn = "4MW" + stud_usn.toUpperCase();
+            final String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            store(personGivenName, stud_usn, personEmail, personId);
+            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            mAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            loading.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                try {
+                                    String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
+                                    SharedPreferences sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+                                    sharedPreferences.edit().putString("login_Activity", "1").apply();
+                                    Intent go = new Intent(login_Activity.this, MainActivity.class);
+                                    startActivity(go);
+                                    finish();
+                                    overridePendingTransition(R.anim.push_up_in, R.anim.stay);
+                                } catch (Exception e) {
+                                    Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
+                                }
 
-                        } else {
-                            Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Please use sode-edu account to log in", Toast.LENGTH_SHORT).show();
+        }
     }
     private void store(String givenName, String stud_usn, String email, String id){
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);

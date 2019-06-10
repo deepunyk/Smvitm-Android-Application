@@ -1,15 +1,12 @@
 package com.xoi.smvitm;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -26,7 +23,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Edit_User_Profile_Activity extends AppCompatActivity {
+public class Edit_New_User_Profile_Activity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     String student_branch, student_email, student_usn, student_semester, student_section, student_name;
@@ -39,7 +36,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit__user__profile_);
+        setContentView(R.layout.activity_new_edit__user__profile_);
 
         name = (EditText) findViewById(R.id.name);
         usn = (EditText) findViewById(R.id.usn);
@@ -86,7 +83,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                 student_semester = semester_list[semester.getSelectedIndex()];
                 student_section = section_list[section.getSelectedIndex()];
                 if (student_name.equals("")){
-                    Toast.makeText(Edit_User_Profile_Activity.this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_New_User_Profile_Activity.this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
                     submit.setProgress(100);
                     submit.setText("Submit");
                     submit.isEnabled();
@@ -116,9 +113,10 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                             sharedPreferences.edit().putString("Student usn", student_usn).apply();
                             sharedPreferences.edit().putString("Student section", student_section).apply();
                             sharedPreferences.edit().putString("Student Email", student_email).apply();
-                            Intent go = new Intent(Edit_User_Profile_Activity.this, User_profile_Activity.class);
+                            Intent go = new Intent(Edit_New_User_Profile_Activity.this, User_profile_Activity.class);
                             startActivity(go);
                             finish();
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
                         }
                     }
                 },

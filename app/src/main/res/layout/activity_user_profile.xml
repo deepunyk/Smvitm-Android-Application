@@ -259,7 +259,7 @@
 
     <Button
         android:id="@+id/btnRefresh"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -267,35 +267,23 @@
         android:text="Refresh"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline20" />
 
 
     <Button
-        android:id="@+id/btnGet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        android:text="PUSH"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toStartOf="@+id/btnRefresh"
-        app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/btnRefresh" />
-
-    <Button
-        android:id="@+id/signOut"
+        android:id="@+id/btnEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
-        android:text="Sign out"
+        android:text="EDIT"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintStart_toEndOf="@+id/btnRefresh"
-        app:layout_constraintTop_toTopOf="@+id/btnRefresh" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/btnRefresh"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

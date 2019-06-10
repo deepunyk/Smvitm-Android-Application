@@ -12,20 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.baoyachi.stepview.HorizontalStepView;
 import com.baoyachi.stepview.VerticalStepView;
-import com.baoyachi.stepview.bean.StepBean;
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.github.ybq.android.spinkit.SpinKitView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
@@ -37,9 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-public class Home2_fragment extends Fragment{
+public class Timetable_fragment extends Fragment{
 
     String today_day, branch;
     String[] day_list = {"Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday"};
@@ -58,7 +46,7 @@ public class Home2_fragment extends Fragment{
 
 
 
-        view = inflater.inflate(R.layout.fragment_2,container,false);
+        view = inflater.inflate(R.layout.fragment_timebtable,container,false);
 
         stepview= (VerticalStepView)view.findViewById(R.id.step_view);
         btnRefresh = (ActionProcessButton) view.findViewById(R.id.btnRefresh);
@@ -121,7 +109,7 @@ public class Home2_fragment extends Fragment{
                 getData();
             }
         });
-        //return inflater.inflate(R.layout.fragment_2,null);
+        //return inflater.inflate(R.layout.fragment_timebtable,null);
         return view;
     }
 
@@ -368,7 +356,7 @@ public class Home2_fragment extends Fragment{
     }
 
     private void getData(){
-        Home2_fragment.DownloadTask task = new Home2_fragment.DownloadTask();
+        Timetable_fragment.DownloadTask task = new Timetable_fragment.DownloadTask();
         btnRefresh.setProgress(25);
         task.execute("https://script.google.com/macros/s/AKfycbyHjV637lf3NmMpuk4mOtCHBGZLGSgqY3nlfh0uAAdnW00ke02x/exec");
     }

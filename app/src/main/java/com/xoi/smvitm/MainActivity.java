@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView txt = (TextView)findViewById(R.id.txt);
         final BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-        loadFragment(new Home2_fragment());
+        loadFragment(new Timetable_fragment());
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(int tabId) {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                        toolbar.setTitle("Timetable");
                        StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.colorPrimary) );
                        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                       fragment = new Home2_fragment();
+                       fragment = new Timetable_fragment();
                        break;
                    case R.id.tab_circular:
                        toolbar.setTitle("Circulars");
@@ -94,12 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent go = new Intent(MainActivity.this, login_Activity.class);
                 startActivity(go);
                 finish();
+                overridePendingTransition(R.anim.push_up_in, R.anim.stay);
                 break;
             case R.id.user_profile:
                 Intent go1 = new Intent(MainActivity.this, User_profile_Activity.class);
                 startActivity(go1);
                 finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
             default:
                 return false;
