@@ -11,18 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Recycler_View_Adapter extends RecyclerView.Adapter<Recycler_View_Adapter.ViewHolder>{
+import at.markushi.ui.CircleButton;
+
+public class Circular_Recycler_View_Adapter extends RecyclerView.Adapter<Circular_Recycler_View_Adapter.ViewHolder>{
 
     private ArrayList<String> descriptions = new ArrayList<String>();
     private ArrayList<String> links = new ArrayList<String>();
     private ArrayList<String> dates = new ArrayList<String>();
     private Context mContext;
 
-    public Recycler_View_Adapter(ArrayList<String> descriptions, ArrayList<String> links, ArrayList<String> dates, Context mContext) {
+    public Circular_Recycler_View_Adapter(ArrayList<String> descriptions, ArrayList<String> links, ArrayList<String> dates, Context mContext) {
         this.descriptions = descriptions;
         this.links = links;
         this.dates = dates;
@@ -34,7 +35,7 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<Recycler_View_Ad
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.circular_layout_list_item, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                        toolbar.setTitle("Circulars");
                        StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.main_menu3) );
                        toolbar.setBackgroundColor(getResources().getColor(R.color.main_menu3));
-                       fragment = new Home3_fragment();
+                       fragment = new Circular_fragment();
                        break;
                    default:
                        fragment = new Home_fragment();

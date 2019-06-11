@@ -22,6 +22,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.dinuscxj.refresh.IRefreshStatus;
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,21 +31,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Home3_fragment extends Fragment {
+public class Circular_fragment extends Fragment implements IRefreshStatus {
 
     private ArrayList<String> descriptions = new ArrayList<>();
     private ArrayList<String> links = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
     View view;
-    ProgressDialog loading;
     SharedPreferences sharedPreferences;
+    ProgressDialog loader;
     Button refresh;
+    RecyclerRefreshLayout refreshLayout;
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_3,container,false);
+        view = inflater.inflate(R.layout.fragment_circular,container,false);
         refresh = (Button)view.findViewById(R.id.btnRefresh);
+        refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
+        loader = new ProgressDialog(getActivity());
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         try {
@@ -55,21 +61,21 @@ public class Home3_fragment extends Fragment {
         catch (Exception e){
             refresh.performClick();
         }
-        refresh.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 descriptions.removeAll(descriptions);
                 links.removeAll(links);
                 dates.removeAll(dates);
-                getCirculars();
+                    getCirculars();
+                    refreshing();
             }
         });
+
         return view;
     }
 
     private void getCirculars() {
-        loading =  ProgressDialog.show(getActivity(),"Updating the list","please wait",false,true);
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxIpWEw0QJ5FEc_106HZqOS6DD2QKpRdoZ1nLmUxDyda-v8M-g/exec?action=getCirculars",
                 new Response.Listener<String>() {
                     @Override
@@ -119,10 +125,45 @@ public class Home3_fragment extends Fragment {
     }
 
     private void initRecyclerView(){
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-        Recycler_View_Adapter adapter = new Recycler_View_Adapter(descriptions,links,dates,getActivity());
+        recyclerView = view.findViewById(R.id.recyclerview);
+        Circular_Recycler_View_Adapter adapter = new Circular_Recycler_View_Adapter(descriptions,links,dates,getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        loading.dismiss();
+        refreshLayout.setRefreshing(false);
+        refreshComplete();
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void refreshing() {
+        loader.setTitle("Updating circulars");
+        loader.setMessage("Please wait...");
+        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loader.setCancelable(false);
+        loader.show();
+    }
+
+    @Override
+    public void refreshComplete() {
+        loader.dismiss();
+    }
+
+    @Override
+    public void pullToRefresh() {
+
+    }
+
+    @Override
+    public void releaseToRefresh() {
+
+    }
+
+    @Override
+    public void pullProgress(float pullDistance, float pullProgress) {
+
     }
 }
