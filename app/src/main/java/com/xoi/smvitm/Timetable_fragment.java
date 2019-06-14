@@ -1,5 +1,6 @@
 package com.xoi.smvitm;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.dinuscxj.refresh.IRefreshStatus;
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
@@ -30,26 +33,25 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Timetable_fragment extends Fragment{
+public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
     String today_day, branch;
-    String[] day_list = {"Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday"};
-    String[] branch_list = {"First CSE" , "Second CSE" , "Third CSE" , "Fourth Cse" , "First ECE" , "Second ECE" ,"Third ECE" ," Fourth ECE" , "First MECH", "Second MECH", "Third MECH" ,"Fourth MECH", "First CIV", "Second CIV", "Third CIV","Fourth CIV"};
+    String[] day_list = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    String[] branch_list = {"First CSE", "Second CSE", "Third CSE", "Fourth Cse", "First ECE", "Second ECE", "Third ECE", " Fourth ECE", "First MECH", "Second MECH", "Third MECH", "Fourth MECH", "First CIV", "Second CIV", "Third CIV", "Fourth CIV"};
     MaterialSpinner branch_select, day_select;
     View view;
     SharedPreferences sharedPreferences;
-    ArrayList<String> monday_tt,tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt, time_tt;
-    ActionProcessButton btnRefresh;
+    ArrayList<String> monday_tt, tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt, time_tt;
     RecyclerView recyclerView;
+    RecyclerRefreshLayout refreshLayout;
+    ProgressDialog loader;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-
-        view = inflater.inflate(R.layout.fragment_timebtable,container,false);
-        btnRefresh = (ActionProcessButton) view.findViewById(R.id.btnRefresh);
+        view = inflater.inflate(R.layout.fragment_timebtable, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         monday_tt = new ArrayList<>();
@@ -60,27 +62,30 @@ public class Timetable_fragment extends Fragment{
         saturday_tt = new ArrayList<>();
         time_tt = new ArrayList<>();
 
+        refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
+        loader = new ProgressDialog(getActivity());
+
         day_select = (MaterialSpinner) view.findViewById(R.id.day_select);
         day_select.setItems(day_list);
         day_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                String table_download = sharedPreferences.getString("table download","");
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                String table_download = sharedPreferences.getString("table download", "");
                 today_day = day_list[position];
-                if(table_download.equals("1")) {
+                if (table_download.equals("1")) {
                     ArrayList<String> today_tt = new ArrayList<>();
                     try {
                         today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
                         time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
-                        setText(today_tt,time_tt);
+                        setText(today_tt, time_tt);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     getData();
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-                    sharedPreferences.edit().putString("table download","1").apply();
+                    sharedPreferences.edit().putString("table download", "1").apply();
                 }
             }
         });
@@ -89,19 +94,17 @@ public class Timetable_fragment extends Fragment{
         branch_select.setItems(branch_list);
         branch_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
             }
         });
 
-        btnRefresh.setMode(ActionProcessButton.Mode.ENDLESS);
         getDay();
 
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                btnRefresh.setEnabled(false);
-                btnRefresh.setProgress(1);
+            public void onRefresh() {
                 time_tt.removeAll(time_tt);
                 monday_tt.removeAll(monday_tt);
                 tuesday_tt.removeAll(tuesday_tt);
@@ -110,13 +113,48 @@ public class Timetable_fragment extends Fragment{
                 friday_tt.removeAll(friday_tt);
                 saturday_tt.removeAll(saturday_tt);
                 getData();
+                refreshing();
             }
         });
         return view;
     }
 
+    @Override
+    public void reset() {
 
-    public class DownloadTask extends AsyncTask<String,Void,String> {
+    }
+
+    @Override
+    public void refreshing() {
+        loader.setTitle("Updating circulars");
+        loader.setMessage("Please wait...");
+        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loader.setCancelable(false);
+        loader.show();
+    }
+
+    @Override
+    public void refreshComplete() {
+        loader.dismiss();
+    }
+
+    @Override
+    public void pullToRefresh() {
+
+    }
+
+    @Override
+    public void releaseToRefresh() {
+
+    }
+
+    @Override
+    public void pullProgress(float pullDistance, float pullProgress) {
+
+    }
+
+
+    public class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -147,7 +185,7 @@ public class Timetable_fragment extends Fragment{
             try {
                 int count = 0;
                 int i;
-                while(true) {
+                while (true) {
                     JSONObject jsonObject = new JSONObject(s);
                     String userInfo = jsonObject.getString("cseFirst");
                     JSONArray arr = new JSONArray(userInfo);
@@ -157,7 +195,7 @@ public class Timetable_fragment extends Fragment{
                     for (i = 0; i < arr.length(); i++) {
                         jsonPart = arr.getJSONObject(i);
                         String day_str = jsonPart.getString("day");
-                        if(day_str.equals("Time")){
+                        if (day_str.equals("Time")) {
                             time_tt.add(jsonPart.getString("1"));
                             time_tt.add(jsonPart.getString("2"));
                             time_tt.add(jsonPart.getString("3"));
@@ -166,7 +204,7 @@ public class Timetable_fragment extends Fragment{
                             time_tt.add(jsonPart.getString("6"));
                             time_tt.add(jsonPart.getString("7"));
                             try {
-                                sharedPreferences.edit().putString("Time",ObjectSerializer.serialize(time_tt)).apply();
+                                sharedPreferences.edit().putString("Time", ObjectSerializer.serialize(time_tt)).apply();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -175,7 +213,7 @@ public class Timetable_fragment extends Fragment{
                             break;
                         }
                     }
-                    if(cur_day.equals("Monday")) {
+                    if (cur_day.equals("Monday")) {
                         monday_tt.add(jsonPart.getString("1"));
                         monday_tt.add(jsonPart.getString("2"));
                         monday_tt.add(jsonPart.getString("3"));
@@ -184,12 +222,11 @@ public class Timetable_fragment extends Fragment{
                         monday_tt.add(jsonPart.getString("6"));
                         monday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Monday",ObjectSerializer.serialize(monday_tt)).apply();
+                            sharedPreferences.edit().putString("Monday", ObjectSerializer.serialize(monday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(cur_day.equals("Tuesday")) {
+                    } else if (cur_day.equals("Tuesday")) {
                         tuesday_tt.add(jsonPart.getString("1"));
                         tuesday_tt.add(jsonPart.getString("2"));
                         tuesday_tt.add(jsonPart.getString("3"));
@@ -198,12 +235,11 @@ public class Timetable_fragment extends Fragment{
                         tuesday_tt.add(jsonPart.getString("6"));
                         tuesday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Tuesday",ObjectSerializer.serialize(tuesday_tt)).apply();
+                            sharedPreferences.edit().putString("Tuesday", ObjectSerializer.serialize(tuesday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(cur_day.equals("Wednesday")) {
+                    } else if (cur_day.equals("Wednesday")) {
                         wednesday_tt.add(jsonPart.getString("1"));
                         wednesday_tt.add(jsonPart.getString("2"));
                         wednesday_tt.add(jsonPart.getString("3"));
@@ -212,13 +248,11 @@ public class Timetable_fragment extends Fragment{
                         wednesday_tt.add(jsonPart.getString("6"));
                         wednesday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Wednesday",ObjectSerializer.serialize(wednesday_tt)).apply();
+                            sharedPreferences.edit().putString("Wednesday", ObjectSerializer.serialize(wednesday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-
-                    else if(cur_day.equals("Thursday")) {
+                    } else if (cur_day.equals("Thursday")) {
                         thursday_tt.add(jsonPart.getString("1"));
                         thursday_tt.add(jsonPart.getString("2"));
                         thursday_tt.add(jsonPart.getString("3"));
@@ -227,13 +261,11 @@ public class Timetable_fragment extends Fragment{
                         thursday_tt.add(jsonPart.getString("6"));
                         thursday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Thursday",ObjectSerializer.serialize(thursday_tt)).apply();
+                            sharedPreferences.edit().putString("Thursday", ObjectSerializer.serialize(thursday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-
-                    else if(cur_day.equals("Friday")) {
+                    } else if (cur_day.equals("Friday")) {
                         friday_tt.add(jsonPart.getString("1"));
                         friday_tt.add(jsonPart.getString("2"));
                         friday_tt.add(jsonPart.getString("3"));
@@ -242,13 +274,11 @@ public class Timetable_fragment extends Fragment{
                         friday_tt.add(jsonPart.getString("6"));
                         friday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Friday",ObjectSerializer.serialize(friday_tt)).apply();
+                            sharedPreferences.edit().putString("Friday", ObjectSerializer.serialize(friday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-
-                    else if(cur_day.equals("Saturday")) {
+                    } else if (cur_day.equals("Saturday")) {
                         saturday_tt.add(jsonPart.getString("1"));
                         saturday_tt.add(jsonPart.getString("2"));
                         saturday_tt.add(jsonPart.getString("3"));
@@ -257,14 +287,12 @@ public class Timetable_fragment extends Fragment{
                         saturday_tt.add(jsonPart.getString("6"));
                         saturday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Saturday",ObjectSerializer.serialize(saturday_tt)).apply();
+                            sharedPreferences.edit().putString("Saturday", ObjectSerializer.serialize(saturday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;
-                    }
-
-                    else {
+                    } else {
                         monday_tt.add(jsonPart.getString("1"));
                         monday_tt.add(jsonPart.getString("2"));
                         monday_tt.add(jsonPart.getString("3"));
@@ -273,7 +301,7 @@ public class Timetable_fragment extends Fragment{
                         monday_tt.add(jsonPart.getString("6"));
                         monday_tt.add(jsonPart.getString("7"));
                         try {
-                            sharedPreferences.edit().putString("Monday",ObjectSerializer.serialize(monday_tt)).apply();
+                            sharedPreferences.edit().putString("Monday", ObjectSerializer.serialize(monday_tt)).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -284,11 +312,10 @@ public class Timetable_fragment extends Fragment{
                 try {
                     today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
                     time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
-                    setText(today_tt,time_tt);
+                    setText(today_tt, time_tt);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                btnRefresh.setProgress(100);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -297,7 +324,7 @@ public class Timetable_fragment extends Fragment{
         }
     }
 
-    private void getDay(){
+    private void getDay() {
         int weekDay = 1;
 
         Calendar c = Calendar.getInstance();
@@ -318,7 +345,7 @@ public class Timetable_fragment extends Fragment{
         } else if (Calendar.SUNDAY == dayOfWeek) {
             weekDay = 7;
         }
-        switch (weekDay){
+        switch (weekDay) {
             case 1:
                 today_day = "Monday";
                 day_select.setSelectedIndex(0);
@@ -352,22 +379,23 @@ public class Timetable_fragment extends Fragment{
         try {
             today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
             time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
-            setText(today_tt,time_tt);
+            setText(today_tt, time_tt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setText(ArrayList<String> classes, ArrayList<String> timings){
+    private void setText(ArrayList<String> classes, ArrayList<String> timings) {
         recyclerView = view.findViewById(R.id.recyclerview);
-        Timetable_Recycler_ViewAdapter adapter = new Timetable_Recycler_ViewAdapter(classes,timings,getActivity());
+        Timetable_Recycler_ViewAdapter adapter = new Timetable_Recycler_ViewAdapter(classes, timings, getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        refreshLayout.setRefreshing(false);
+        refreshComplete();
     }
 
-    private void getData(){
+    private void getData() {
         Timetable_fragment.DownloadTask task = new Timetable_fragment.DownloadTask();
-        btnRefresh.setProgress(25);
         task.execute("https://script.google.com/macros/s/AKfycbyHjV637lf3NmMpuk4mOtCHBGZLGSgqY3nlfh0uAAdnW00ke02x/exec");
     }
 }
