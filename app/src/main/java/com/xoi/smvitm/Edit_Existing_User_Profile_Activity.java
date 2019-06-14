@@ -3,11 +3,16 @@ package com.xoi.smvitm;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -34,6 +39,7 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
     String[] section_list = {"A" , "B" , "C"};
     String[] semester_list = {"1" , "3" , "5" , "7"};
     int section_index, semester_index;
+    ImageView user_dp;
     Button back;
 
     @Override
@@ -48,7 +54,7 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         semester = (MaterialSpinner) findViewById(R.id.semester);
         submit = (ActionProcessButton) findViewById(R.id.submit);
         back = (Button)findViewById(R.id.back);
-
+        user_dp = (ImageView)findViewById(R.id.user_profile_pic);
 
         submit.setMode(ActionProcessButton.Mode.ENDLESS);
 
@@ -178,4 +184,6 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         }
         return i;
     }
+
+
 }

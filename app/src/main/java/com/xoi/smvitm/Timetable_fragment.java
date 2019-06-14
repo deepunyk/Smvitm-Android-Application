@@ -126,7 +126,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
     @Override
     public void refreshing() {
-        loader.setTitle("Updating circulars");
+        loader.setTitle("Updating timetable");
         loader.setMessage("Please wait...");
         loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loader.setCancelable(false);
