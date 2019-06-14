@@ -9,9 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -35,10 +38,9 @@ public class Timetable_fragment extends Fragment{
     MaterialSpinner branch_select, day_select;
     View view;
     SharedPreferences sharedPreferences;
-    ArrayList<String> monday_tt,tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt;
-    VerticalStepView stepview;
+    ArrayList<String> monday_tt,tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt, time_tt;
     ActionProcessButton btnRefresh;
-
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -47,8 +49,6 @@ public class Timetable_fragment extends Fragment{
 
 
         view = inflater.inflate(R.layout.fragment_timebtable,container,false);
-
-        stepview= (VerticalStepView)view.findViewById(R.id.step_view);
         btnRefresh = (ActionProcessButton) view.findViewById(R.id.btnRefresh);
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
@@ -58,6 +58,7 @@ public class Timetable_fragment extends Fragment{
         thursday_tt = new ArrayList<>();
         friday_tt = new ArrayList<>();
         saturday_tt = new ArrayList<>();
+        time_tt = new ArrayList<>();
 
         day_select = (MaterialSpinner) view.findViewById(R.id.day_select);
         day_select.setItems(day_list);
@@ -70,7 +71,8 @@ public class Timetable_fragment extends Fragment{
                     ArrayList<String> today_tt = new ArrayList<>();
                     try {
                         today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
-                        setText(today_tt);
+                        time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+                        setText(today_tt,time_tt);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -100,6 +102,7 @@ public class Timetable_fragment extends Fragment{
             public void onClick(View v) {
                 btnRefresh.setEnabled(false);
                 btnRefresh.setProgress(1);
+                time_tt.removeAll(time_tt);
                 monday_tt.removeAll(monday_tt);
                 tuesday_tt.removeAll(tuesday_tt);
                 wednesday_tt.removeAll(wednesday_tt);
@@ -109,7 +112,6 @@ public class Timetable_fragment extends Fragment{
                 getData();
             }
         });
-        //return inflater.inflate(R.layout.fragment_timebtable,null);
         return view;
     }
 
@@ -155,6 +157,20 @@ public class Timetable_fragment extends Fragment{
                     for (i = 0; i < arr.length(); i++) {
                         jsonPart = arr.getJSONObject(i);
                         String day_str = jsonPart.getString("day");
+                        if(day_str.equals("Time")){
+                            time_tt.add(jsonPart.getString("1"));
+                            time_tt.add(jsonPart.getString("2"));
+                            time_tt.add(jsonPart.getString("3"));
+                            time_tt.add(jsonPart.getString("4"));
+                            time_tt.add(jsonPart.getString("5"));
+                            time_tt.add(jsonPart.getString("6"));
+                            time_tt.add(jsonPart.getString("7"));
+                            try {
+                                sharedPreferences.edit().putString("Time",ObjectSerializer.serialize(time_tt)).apply();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                         if (day_str.equals(cur_day)) {
                             break;
                         }
@@ -267,7 +283,8 @@ public class Timetable_fragment extends Fragment{
                 ArrayList<String> today_tt = new ArrayList<>();
                 try {
                     today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
-                    setText(today_tt);
+                    time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+                    setText(today_tt,time_tt);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -295,7 +312,7 @@ public class Timetable_fragment extends Fragment{
         } else if (Calendar.THURSDAY == dayOfWeek) {
             weekDay = 4;
         } else if (Calendar.FRIDAY == dayOfWeek) {
-            weekDay = 8;
+            weekDay = 5;
         } else if (Calendar.SATURDAY == dayOfWeek) {
             weekDay = 6;
         } else if (Calendar.SUNDAY == dayOfWeek) {
@@ -334,25 +351,18 @@ public class Timetable_fragment extends Fragment{
         ArrayList<String> today_tt = new ArrayList<>();
         try {
             today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
-            setText(today_tt);
+            time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+            setText(today_tt,time_tt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setText(ArrayList<String> cur_day){
-        stepview.setStepsViewIndicatorComplectingPosition(-1)
-                .reverseDraw(false)
-                .setStepViewTexts(cur_day)
-                .setTextSize(15)
-                .setLinePaddingProportion(0.7f)
-                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getActivity(), R.color.colorAccent))
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getActivity(), R.color.colorAccent))
-                .setStepViewComplectedTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
-                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(getActivity(), R.drawable.complted))
-                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(getActivity(), R.drawable.check_icon))
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(getActivity(), R.drawable.attention));
+    private void setText(ArrayList<String> classes, ArrayList<String> timings){
+        recyclerView = view.findViewById(R.id.recyclerview);
+        Timetable_Recycler_ViewAdapter adapter = new Timetable_Recycler_ViewAdapter(classes,timings,getActivity());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void getData(){

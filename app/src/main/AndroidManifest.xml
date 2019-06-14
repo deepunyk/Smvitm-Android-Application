@@ -16,9 +16,9 @@
         <activity android:name=".splash_Activiy"></activity>
         <activity android:name=".User_profile_Activity" />
         <activity android:name=".Edit_Existing_User_Profile_Activity" />
-        <activity android:name=".login_Activity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Edit_New_User_Profile_Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".login_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
+        id="@+id/tab_timetable"
+        icon="@drawable/timetable_icon"
+        title="Timetable"
+        barColorWhenSelected = "@color/colorPrimary"/>
+    <tab
         id="@+id/tab_circular"
         icon="@drawable/ic_newspaper"
         title="Circulars"
@@ -10,9 +15,4 @@
         icon="@drawable/home_icon"
         title="Home"
         barColorWhenSelected = "@color/main_menu1"/>
-    <tab
-        id="@+id/tab_timetable"
-        icon="@drawable/timetable_icon"
-        title="Timetable"
-        barColorWhenSelected = "@color/colorPrimary"/>
 </tabs>
