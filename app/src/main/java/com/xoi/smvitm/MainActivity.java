@@ -3,22 +3,30 @@ package com.xoi.smvitm;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.jaeger.library.StatusBarUtil;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,59 +35,49 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final TextView txt = (TextView)findViewById(R.id.txt);
-        final BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-        loadFragment(new Timetable_fragment());
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(int tabId) {
-                Fragment fragment = null;
-               switch (tabId){
-                   case R.id.tab_home:
-                       toolbar.setTitle("Home");
-                       StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.main_menu1) );
-                       toolbar.setBackgroundColor(getResources().getColor(R.color.main_menu1));
-                       fragment = new Home_fragment();
-                       break;
-                   case R.id.tab_timetable:
-                       toolbar.setTitle("Timetable");
-                       StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.colorPrimary) );
-                       toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                       fragment = new Timetable_fragment();
-                       break;
-                   case R.id.tab_circular:
-                       toolbar.setTitle("Circulars");
-                       StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.main_menu3) );
-                       toolbar.setBackgroundColor(getResources().getColor(R.color.main_menu3));
-                       fragment = new Circular_fragment();
-                       break;
-                   default:
-                       fragment = new Home_fragment();
-                       break;
-               }
-                loadFragment(fragment);
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
-    }
-    private boolean loadFragment(Fragment fragment){
-        if(fragment!=null){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.contentContainer,fragment)
-                    .commit();
-            return true;
-        }
-        else
-            return false;
+        final NavigationView navigationView = (NavigationView)findViewById(R.id.navView);
+        navigationView.setCheckedItem(R.id.user_profile_nav);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                menuItem.setChecked(true);
+                switch (id){
+                    case R.id.user_profile_nav:
+                        Toast.makeText(MainActivity.this, "User profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.timetable_nav:
+                        Toast.makeText(MainActivity.this, "Timetable", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.circular_nav:
+                        Toast.makeText(MainActivity.this, "Circular", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        return false;
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -105,6 +103,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return false;
         }
-        return super.onOptionsItemSelected(item);
+        return actionBarDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 }

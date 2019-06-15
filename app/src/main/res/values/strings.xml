@@ -14,5 +14,6 @@
         <item>Bus timings</item>
     </string-array>
     <string name="title_activity_try">Try</string>
-
+    <string name="Open">Smvitm</string>
+    <string name="Close">Smvitm</string>
 </resources>
