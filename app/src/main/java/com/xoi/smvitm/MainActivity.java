@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         TextView nav_user = (TextView)hView.findViewById(R.id.header_name);
         nav_user.setText(student_name);
 
-        navigationView.setCheckedItem(R.id.user_profile_nav);
+        navigationView.setCheckedItem(R.id.home_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 menuItem.setChecked(true);
                 switch (id){
-                    case R.id.user_profile_nav:
+                    case R.id.home_nav:
                         fragment = new Home_fragment();
                         break;
                     case R.id.timetable_nav:
@@ -89,6 +89,20 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new Faculty_fragment();
                         toolbar.setTitle("Faculty");
                         break;
+                    case R.id.user_profile_nav:
+                        Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
+                        startActivity(go);
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+                        break;
+                    case R.id.sign_out_nav:
+                        SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().clear().apply();
+                        FirebaseAuth.getInstance().signOut();
+                        Intent go1 = new Intent(MainActivity.this, login_Activity.class);
+                        startActivity(go1);
+                        finish();
+                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
                     default:
                         toolbar.setTitle("SMVITM");
                         return false;

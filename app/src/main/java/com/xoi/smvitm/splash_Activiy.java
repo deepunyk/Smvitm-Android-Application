@@ -42,7 +42,7 @@ public class splash_Activiy extends AppCompatActivity {
         animation.start();
 
         if (internet) {
-            login = sharedPreferences.getString("login_Activity", "0");
+            login = sharedPreferences.getString("login_Activity", "");
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
             txt.setText("Welcome");
             animation.stop();
@@ -50,7 +50,7 @@ public class splash_Activiy extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (login.equals("0")) {
+                    if (!sharedPreferences.contains("login_Activity")) {
                         Intent go = new Intent(splash_Activiy.this, login_Activity.class);
                         startActivity(go);
                         finish();

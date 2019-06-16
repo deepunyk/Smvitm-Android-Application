@@ -106,7 +106,7 @@ public class login_Activity extends AppCompatActivity {
                                     String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
                                     SharedPreferences sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
                                     sharedPreferences.edit().putString("login_Activity", "1").apply();
-                                    Intent go = new Intent(login_Activity.this, MainActivity.class);
+                                    Intent go = new Intent(login_Activity.this, User_profile_Activity.class);
                                     startActivity(go);
                                     finish();
                                     overridePendingTransition(R.anim.push_up_in, R.anim.stay);

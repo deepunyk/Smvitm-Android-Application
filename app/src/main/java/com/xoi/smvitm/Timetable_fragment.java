@@ -65,15 +65,32 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
 
+        String table_download = sharedPreferences.getString("table download", "");
+
+
         day_select = (MaterialSpinner) view.findViewById(R.id.day_select);
         day_select.setItems(day_list);
+
+        if(sharedPreferences.contains("table download")){
+            ArrayList<String> today_tt = new ArrayList<>();
+            try {
+                today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
+                time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+                setText(today_tt, time_tt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            refresh();
+        }
+
         day_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                String table_download = sharedPreferences.getString("table download", "");
                 today_day = day_list[position];
-                if (table_download.equals("1")) {
+                if (sharedPreferences.contains("table download")) {
                     ArrayList<String> today_tt = new ArrayList<>();
                     try {
                         today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
@@ -105,20 +122,23 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                time_tt.removeAll(time_tt);
-                monday_tt.removeAll(monday_tt);
-                tuesday_tt.removeAll(tuesday_tt);
-                wednesday_tt.removeAll(wednesday_tt);
-                thursday_tt.removeAll(thursday_tt);
-                friday_tt.removeAll(friday_tt);
-                saturday_tt.removeAll(saturday_tt);
-                getData();
-                refreshing();
+                refresh();
             }
         });
         return view;
     }
 
+    private void refresh(){
+        time_tt.removeAll(time_tt);
+        monday_tt.removeAll(monday_tt);
+        tuesday_tt.removeAll(tuesday_tt);
+        wednesday_tt.removeAll(wednesday_tt);
+        thursday_tt.removeAll(thursday_tt);
+        friday_tt.removeAll(friday_tt);
+        saturday_tt.removeAll(saturday_tt);
+        getData();
+        refreshing();
+    }
     @Override
     public void reset() {
 

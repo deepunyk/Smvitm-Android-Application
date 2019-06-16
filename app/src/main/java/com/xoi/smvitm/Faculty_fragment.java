@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.dinuscxj.refresh.IRefreshStatus;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,14 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
     RecyclerView recyclerView;
     RecyclerRefreshLayout refreshLayout;
     ProgressDialog loader;
+    String url = "";
+    String cs_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getCse";
+    String ece_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getEce";
+    String mech_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getMech";
+    String civil_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getCivil";
+    String basic_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getBasic";
+    MaterialSpinner branch_select;
+    String[] branch_list = {"Basic Science", "Computer Science", "Electronics" , "Mechanical", "Civil"};
 
     @Nullable
     @Override
@@ -52,7 +61,41 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
 
+        url = basic_url;
         refresh();
+
+        branch_select = (MaterialSpinner) view.findViewById(R.id.branch_select);
+        branch_select.setItems(branch_list);
+        branch_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                String selected_branch = branch_list[position];
+                switch (selected_branch){
+                    case "Basic Science":
+                        url = basic_url;
+                        refresh();
+                        break;
+                    case "Computer Science":
+                        url = cs_url;
+                        refresh();
+                        break;
+                    case "Electronics":
+                        url = ece_url;
+                        refresh();
+                        break;
+                    case "Mechanical":
+                        url = mech_url;
+                        refresh();
+                        break;
+                    case "Civil":
+                        url = civil_url;
+                        refresh();
+                        break;
+                    default:
+                        url = basic_url;
+                }
+            }
+        });
 
         refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
@@ -76,7 +119,7 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
     }
 
     private void getFaculty() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getFaculty",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

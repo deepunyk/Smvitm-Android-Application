@@ -52,29 +52,36 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
         loader = new ProgressDialog(getActivity());
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        try {
-            descriptions = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular description", ObjectSerializer.serialize(new ArrayList<String>())));
-            links = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular link", ObjectSerializer.serialize(new ArrayList<String>())));
-            dates = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular dates", ObjectSerializer.serialize(new ArrayList<String>())));
-            initRecyclerView();
+        if(sharedPreferences.contains("Circular description")) {
+            try {
+                descriptions = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular description", ObjectSerializer.serialize(new ArrayList<String>())));
+                links = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular link", ObjectSerializer.serialize(new ArrayList<String>())));
+                dates = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular dates", ObjectSerializer.serialize(new ArrayList<String>())));
+                initRecyclerView();
+            } catch (Exception e) {
+                refresh();
+            }
         }
-        catch (Exception e){
-            refresh.performClick();
+        else{
+            refresh();
         }
         refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                descriptions.removeAll(descriptions);
-                links.removeAll(links);
-                dates.removeAll(dates);
-                    getCirculars();
-                    refreshing();
+                refresh();
             }
         });
 
         return view;
     }
 
+    private void refresh(){
+        descriptions.removeAll(descriptions);
+        links.removeAll(links);
+        dates.removeAll(dates);
+        getCirculars();
+        refreshing();
+    }
     private void getCirculars() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxIpWEw0QJ5FEc_106HZqOS6DD2QKpRdoZ1nLmUxDyda-v8M-g/exec?action=getCirculars",
                 new Response.Listener<String>() {
