@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
+    TextView header_name;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        header_name = (TextView)findViewById(R.id.header_name);
+
+        sharedPreferences = this.getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
+
+        String student_name = sharedPreferences.getString("Student name", "");
 
         drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
@@ -51,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Home_fragment());
 
-        final NavigationView navigationView = (NavigationView)findViewById(R.id.navView);
+
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.header_name);
+        nav_user.setText(student_name);
+
         navigationView.setCheckedItem(R.id.user_profile_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -65,14 +79,18 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.timetable_nav:
                         fragment = new Timetable_fragment();
+                        toolbar.setTitle("Timetable");
                         break;
                     case R.id.circular_nav:
                         fragment = new Circular_fragment();
+                        toolbar.setTitle("Circulars");
                         break;
                     case R.id.faculty_nav:
                         fragment = new Faculty_fragment();
+                        toolbar.setTitle("Faculty");
                         break;
                     default:
+                        toolbar.setTitle("SMVITM");
                         return false;
                 }
                 drawerLayout.closeDrawers();
@@ -96,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_signOut:
                 SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("login_Activity", "0").apply();
+                sharedPreferences.edit().clear().apply();
                 FirebaseAuth.getInstance().signOut();
                 Intent go = new Intent(MainActivity.this, login_Activity.class);
                 startActivity(go);
