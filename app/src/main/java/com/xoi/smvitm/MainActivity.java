@@ -48,27 +48,35 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        loadFragment(new Home_fragment());
+
         final NavigationView navigationView = (NavigationView)findViewById(R.id.navView);
         navigationView.setCheckedItem(R.id.user_profile_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
+                Fragment fragment = null;
                 menuItem.setChecked(true);
                 switch (id){
                     case R.id.user_profile_nav:
-                        Toast.makeText(MainActivity.this, "User profile", Toast.LENGTH_SHORT).show();
+                        fragment = new Home_fragment();
                         break;
                     case R.id.timetable_nav:
-                        Toast.makeText(MainActivity.this, "Timetable", Toast.LENGTH_SHORT).show();
+                        fragment = new Timetable_fragment();
                         break;
                     case R.id.circular_nav:
-                        Toast.makeText(MainActivity.this, "Circular", Toast.LENGTH_SHORT).show();
+                        fragment = new Circular_fragment();
+                        break;
+                    case R.id.faculty_nav:
+                        fragment = new Faculty_fragment();
                         break;
                     default:
                         return false;
                 }
                 drawerLayout.closeDrawers();
+                loadFragment(fragment);
                 return true;
             }
         });
@@ -104,5 +112,16 @@ public class MainActivity extends AppCompatActivity {
                 return false;
         }
         return actionBarDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+    private boolean loadFragment(Fragment fragment){
+        if(fragment!=null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentContainer,fragment)
+                    .commit();
+            return true;
+        }
+        else
+            return false;
     }
 }

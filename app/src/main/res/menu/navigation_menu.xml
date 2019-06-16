@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:checkableBehavior="single">
-    <item
-        android:id="@+id/user_profile_nav"
-        android:title="Profile"
-        android:icon="@drawable/ic_user_icon">
-    </item>
-    <item
-        android:id="@+id/timetable_nav"
-        android:title="Timetable"
-        android:icon="@drawable/timetable_icon">
-    </item>
-    <item
-        android:id="@+id/circular_nav"
-        android:title="Circulars"
-        android:icon="@drawable/ic_newspaper">
-    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/user_profile_nav"
+            android:icon="@drawable/ic_user_icon"
+            android:title="Profile"/>
+        <item
+            android:id="@+id/timetable_nav"
+            android:icon="@drawable/timetable_icon"
+            android:title="Timetable"/>
+        <item
+            android:id="@+id/circular_nav"
+            android:icon="@drawable/ic_newspaper"
+            android:title="Circulars"/>
+        <item
+            android:id="@+id/faculty_nav"
+            android:icon="@drawable/ic_nav_faculty"
+            android:title="Faculty"/>
+
     </group>
+
 </menu>
