@@ -2,6 +2,7 @@ package com.xoi.smvitm;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,9 +13,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextClock;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
@@ -35,16 +42,19 @@ import java.util.Calendar;
 
 public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
-    String today_day, branch;
+    String today_day;
     String[] day_list = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    String[] branch_list = {"First CSE", "Second CSE", "Third CSE", "Fourth Cse", "First ECE", "Second ECE", "Third ECE", " Fourth ECE", "First MECH", "Second MECH", "Third MECH", "Fourth MECH", "First CIV", "Second CIV", "Third CIV", "Fourth CIV"};
-    MaterialSpinner branch_select, day_select;
+    MaterialSpinner day_select;
     View view;
     SharedPreferences sharedPreferences;
     ArrayList<String> monday_tt, tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt, time_tt;
     RecyclerView recyclerView;
     RecyclerRefreshLayout refreshLayout;
     ProgressDialog loader;
+    Button btnClass;
+    public static TextView branch_txt, sem_txt, section_txt;
+
+    public static int branch, sem, section;
 
     @Nullable
     @Override
@@ -62,11 +72,15 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         saturday_tt = new ArrayList<>();
         time_tt = new ArrayList<>();
 
+        branch_txt = (TextView)view.findViewById(R.id.branch_txt);
+        sem_txt = (TextView)view.findViewById(R.id.sem_txt);
+        section_txt = (TextView)view.findViewById(R.id.section_txt);
+
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
+        btnClass = (Button)view.findViewById(R.id.btnClass);
         loader = new ProgressDialog(getActivity());
 
         String table_download = sharedPreferences.getString("table download", "");
-
 
         day_select = (MaterialSpinner) view.findViewById(R.id.day_select);
         day_select.setItems(day_list);
@@ -107,22 +121,20 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
             }
         });
 
-        branch_select = (MaterialSpinner) view.findViewById(R.id.branch_select);
-        branch_select.setItems(branch_list);
-        branch_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-            }
-        });
-
         getDay();
 
         refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
+            }
+        });
+
+        btnClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(getContext(), Popup_timetable_activity.class);
+                startActivity(go);
             }
         });
         return view;
@@ -418,4 +430,5 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         Timetable_fragment.DownloadTask task = new Timetable_fragment.DownloadTask();
         task.execute("https://script.google.com/macros/s/AKfycbyHjV637lf3NmMpuk4mOtCHBGZLGSgqY3nlfh0uAAdnW00ke02x/exec");
     }
+
 }

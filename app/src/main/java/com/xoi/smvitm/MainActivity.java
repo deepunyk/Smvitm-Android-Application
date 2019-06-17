@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Home_fragment());
+        loadFragment(new Timetable_fragment());
 
 
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         TextView nav_user = (TextView)hView.findViewById(R.id.header_name);
         nav_user.setText(student_name);
 
-        navigationView.setCheckedItem(R.id.home_nav);
+        navigationView.setCheckedItem(R.id.timetable_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

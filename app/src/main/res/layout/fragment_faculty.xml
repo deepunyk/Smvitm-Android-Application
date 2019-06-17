@@ -16,8 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:ms_background_color="@color/colorPrimary"
-        app:ms_text_color="@color/white" />
+        app:ms_background_color="@color/white"
+        app:ms_text_color="@color/colorPrimary" />
 
     <com.dinuscxj.refresh.RecyclerRefreshLayout
         android:id="@+id/main_swipe"
