@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 public class splash_Activiy extends AppCompatActivity {
     String login;
-    ImageView img;
     TextView txt;
     Boolean internet;
     SharedPreferences sharedPreferences;
@@ -28,25 +27,15 @@ public class splash_Activiy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        img = (ImageView) findViewById(R.id.img);
         txt = (TextView) findViewById(R.id.txt);
 
         internet = checkInternetConnection();
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
 
-        final AnimationDrawable animation = new AnimationDrawable();
-        animation.addFrame(getResources().getDrawable(R.drawable.light_off), 500);
-        animation.addFrame(getResources().getDrawable(R.drawable.light_on), 100);
-        animation.setOneShot(false);
-        img.setImageDrawable(animation);
-        animation.start();
-
         if (internet) {
             login = sharedPreferences.getString("login_Activity", "");
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
             txt.setText("Welcome");
-            animation.stop();
-            img.setImageResource(R.drawable.light_bulb);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

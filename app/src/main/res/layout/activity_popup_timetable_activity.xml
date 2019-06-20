@@ -8,11 +8,12 @@
 
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:id="@+id/sem_select"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/asap_medium"
             android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/branch_select"
+            app:layout_constraintStart_toStartOf="@+id/branch_select"
             app:layout_constraintTop_toTopOf="@+id/guideline7"
             app:ms_background_color="@color/colorPrimary"
             app:ms_text_color="@color/white" />
@@ -28,6 +29,7 @@
             android:id="@+id/branch_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/asap_medium"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,11 +46,12 @@
 
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:id="@+id/section_select"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/asap_medium"
             android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/branch_select"
+            app:layout_constraintStart_toStartOf="@+id/branch_select"
             app:layout_constraintTop_toTopOf="@+id/guideline39"
             app:ms_background_color="@color/colorPrimary"
             app:ms_text_color="@color/white" />
@@ -65,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
+            app:layout_constraintGuide_percent="0.75" />
 
         <Button
             android:id="@+id/apply"
@@ -81,13 +84,61 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="20sp"
-            android:layout_marginBottom="8dp"
-            android:text="Select your class"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/asap"
+            android:text="Select your semester"
             android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/asap"
+            android:text="Select your branch"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline33"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/asap"
+            android:text="Select your section"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/section_select"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/titillium_web_semibold"
+            android:gravity="center"
+            android:text="Please note that only your current class timetable will be available for offline purpose."
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/apply" />
 
 </android.support.constraint.ConstraintLayout>

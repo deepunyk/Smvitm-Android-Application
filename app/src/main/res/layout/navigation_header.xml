@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/convergence"
         android:text="Deepak Nayak"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

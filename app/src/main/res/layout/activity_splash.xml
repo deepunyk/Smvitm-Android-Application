@@ -11,11 +11,13 @@
         android:id="@+id/img"
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:srcCompat="@drawable/circle" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline8"
@@ -36,7 +38,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/heebo"
         android:gravity="center"
         android:text="Fetching user data..."
         android:textColor="@color/white"
@@ -44,12 +48,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+        app:layout_constraintTop_toTopOf="@+id/guideline24" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline24"
+        app:layout_constraintEnd_toEndOf="@+id/img"
+        app:layout_constraintStart_toStartOf="@+id/img"
+        app:layout_constraintTop_toTopOf="@+id/img"
+        app:srcCompat="@drawable/college_logo" />
 </android.support.constraint.ConstraintLayout>
