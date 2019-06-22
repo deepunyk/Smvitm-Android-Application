@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Timetable_fragment());
+        loadFragment(new Home_fragment());
 
 
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         TextView nav_user = (TextView)hView.findViewById(R.id.header_name);
         nav_user.setText(student_name);
 
-        navigationView.setCheckedItem(R.id.timetable_nav);
+        navigationView.setCheckedItem(R.id.home_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.faculty_nav:
                         fragment = new Faculty_fragment();
                         toolbar.setTitle("Faculty");
+                        break;
+                    case R.id.events_nav:
+                        fragment = new Event_fragment();
+                        toolbar.setTitle("Events");
                         break;
                     case R.id.user_profile_nav:
                         Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
