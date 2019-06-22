@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -28,6 +30,7 @@ import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.BubbleToggleView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
+import com.github.ybq.android.spinkit.SpinKitView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +53,8 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     String pUrl = url + "getProgram";
     String cUrl = url + "getCompetition";
     BubbleNavigationConstraintView bubbleToggleView;
+    SpinKitView load_an;
+    TextView load_txt;
 
     @Nullable
     @Override
@@ -60,7 +65,8 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
         bubbleToggleView = (BubbleNavigationConstraintView) view.findViewById(R.id.bubble_nav_view);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         url = wUrl;
-
+        load_an = (SpinKitView)view.findViewById(R.id.spin_kit);
+        load_txt = (TextView)view.findViewById(R.id.load_txt);
         refresh();
 
         refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
@@ -169,12 +175,16 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
         loader.setCancelable(false);
         //loader.show();
         recyclerView.setVisibility(View.GONE);
+        load_an.setVisibility(View.VISIBLE);
+        load_txt.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void refreshComplete() {
         //loader.dismiss();
         recyclerView.setVisibility(View.VISIBLE);
+        load_an.setVisibility(View.GONE);
+        load_txt.setVisibility(View.GONE);
     }
 
     @Override

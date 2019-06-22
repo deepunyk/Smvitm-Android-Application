@@ -6,6 +6,33 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bk">
 
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="64dp"
+        app:SpinKit_Color="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/main_swipe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/main_swipe"
+        app:layout_constraintTop_toTopOf="@+id/main_swipe" />
+
+    <TextView
+        android:id="@+id/load_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/asap_medium"
+        android:text="Collecting events"
+        android:textColor="@color/light_black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/spin_kit"
+        app:layout_constraintStart_toStartOf="@+id/spin_kit"
+        app:layout_constraintTop_toBottomOf="@+id/spin_kit" />
+
     <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
         android:id="@+id/bubble_nav_view"
         android:layout_width="0dp"
@@ -63,8 +90,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubble_nav_view">
+        app:layout_constraintTop_toBottomOf="@+id/bubble_nav_view"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
