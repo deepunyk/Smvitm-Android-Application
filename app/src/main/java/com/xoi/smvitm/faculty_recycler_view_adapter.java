@@ -1,7 +1,6 @@
 package com.xoi.smvitm;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -74,7 +73,7 @@ public class faculty_recycler_view_adapter extends RecyclerView.Adapter<faculty_
             designation = itemView.findViewById(R.id.designation);
             mobile = itemView.findViewById(R.id.mobile);
             email = itemView.findViewById(R.id.email);
-            img = itemView.findViewById(R.id.img);
+            img = itemView.findViewById(R.id.pop_img);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }
     }

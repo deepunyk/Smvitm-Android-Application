@@ -22,13 +22,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.jaeger.library.StatusBarUtil;
+import com.tomer.fadingtextview.FadingTextView;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
     TextView header_name;
+    FadingTextView header_branch;
     SharedPreferences sharedPreferences;
+    String student_branch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +41,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        header_name = (TextView)findViewById(R.id.header_name);
-
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
 
         String student_name = sharedPreferences.getString("Student name", "");
+        String student_sem = sharedPreferences.getString("Student sem","");
+        student_branch = sharedPreferences.getString("Student branch", "");
+        String student_section = sharedPreferences.getString("Student section","");
+        student_sem = student_sem + " " + student_section;
+        String student_usn = sharedPreferences.getString("Student usn", "");
+        String[] array_txt = {student_branch, student_sem,student_usn};
 
         drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
@@ -57,16 +64,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Event_fragment());
+        loadFragment(new Home_fragment());
 
 
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.header_name);
-        nav_user.setText(student_name);
+        header_name = (TextView)hView.findViewById(R.id.header_name);
+        header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);
+        header_branch.setTexts(array_txt);
+        header_name.setText(student_name);
 
-        navigationView.setCheckedItem(R.id.events_nav);
+        navigationView.setCheckedItem(R.id.home_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -76,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (id){
                     case R.id.home_nav:
                         fragment = new Home_fragment();
+                        toolbar.setTitle("SMVITM");
                         break;
                     case R.id.timetable_nav:
                         fragment = new Timetable_fragment();
@@ -92,12 +102,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.events_nav:
                         fragment = new Event_fragment();
                         toolbar.setTitle("Events");
-                        break;
-                    case R.id.user_profile_nav:
-                        Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
-                        startActivity(go);
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                         break;
                     case R.id.sign_out_nav:
                         SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
@@ -139,12 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 overridePendingTransition(R.anim.push_up_in, R.anim.stay);
                 break;
-            case R.id.user_profile:
-                Intent go1 = new Intent(MainActivity.this, User_profile_Activity.class);
-                startActivity(go1);
-                finish();
-                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
-                break;
             default:
                 return false;
         }
@@ -160,5 +158,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    public void navigation_profile(View view){
+        Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
+        startActivity(go);
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+
     }
 }

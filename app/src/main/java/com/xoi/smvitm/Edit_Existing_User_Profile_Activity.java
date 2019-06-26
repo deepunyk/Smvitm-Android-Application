@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -33,7 +34,8 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     String student_branch, student_email, student_usn, student_semester, student_section, student_name;
-    EditText name, usn, branch;
+    EditText name;
+    TextView branch, usn;
     MaterialSpinner section, semester;
     ActionProcessButton submit;
     String[] section_list = {"A" , "B" , "C"};
@@ -48,8 +50,8 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_edit__existing__user__profile);
 
         name = (EditText) findViewById(R.id.name);
-        usn = (EditText) findViewById(R.id.usn);
-        branch = (EditText) findViewById(R.id.branch);
+        usn = (TextView) findViewById(R.id.usn);
+        branch = (TextView) findViewById(R.id.branch);
         section = (MaterialSpinner) findViewById(R.id.section);
         semester = (MaterialSpinner) findViewById(R.id.semester);
         submit = (ActionProcessButton) findViewById(R.id.submit);
@@ -57,9 +59,6 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         user_dp = (ImageView)findViewById(R.id.user_profile_pic);
 
         submit.setMode(ActionProcessButton.Mode.ENDLESS);
-
-        usn.setInputType(0);
-        branch.setInputType(0);
 
         section.setItems(section_list);
         semester.setItems(semester_list);

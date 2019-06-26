@@ -59,9 +59,6 @@ public class Popup_timetable_activity extends AppCompatActivity {
                 Timetable_fragment.branch = branch;
                 Timetable_fragment.sem = sem;
                 Timetable_fragment.section = section;
-                Timetable_fragment.branch_txt.setText(branch_list[branch]);
-                Timetable_fragment.section_txt.setText(section_list[section]);
-                Timetable_fragment.sem_txt.setText(sem_list[sem]);
                 finish();
             }
         });

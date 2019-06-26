@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary"> #5e35b1 </color>
+    <!--5e35b1-->
     <color name="menuIcon_selcted">#C0C0C0</color>
     <color name="main_menu1">#7C1336</color>
     <color name="main_menu3"> #7c137c </color>

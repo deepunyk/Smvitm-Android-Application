@@ -28,6 +28,8 @@ import com.baoyachi.stepview.VerticalStepView;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.dinuscxj.refresh.IRefreshStatus;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
@@ -44,17 +46,15 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
     String today_day;
     String[] day_list = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    MaterialSpinner day_select;
     View view;
     SharedPreferences sharedPreferences;
     ArrayList<String> monday_tt, tuesday_tt, wednesday_tt, thursday_tt, friday_tt, saturday_tt, time_tt;
     RecyclerView recyclerView;
     RecyclerRefreshLayout refreshLayout;
     ProgressDialog loader;
-    Button btnClass;
-    public static TextView branch_txt, sem_txt, section_txt;
-
+    BubbleNavigationConstraintView bv;
     public static int branch, sem, section;
+    int prevPos;
 
     @Nullable
     @Override
@@ -72,20 +72,14 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         saturday_tt = new ArrayList<>();
         time_tt = new ArrayList<>();
 
-        branch_txt = (TextView)view.findViewById(R.id.branch_txt);
-        sem_txt = (TextView)view.findViewById(R.id.sem_txt);
-        section_txt = (TextView)view.findViewById(R.id.section_txt);
+        bv = (BubbleNavigationConstraintView) view.findViewById(R.id.bubble_nav_view1);
 
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
-        btnClass = (Button)view.findViewById(R.id.btnClass);
         loader = new ProgressDialog(getActivity());
 
         String table_download = sharedPreferences.getString("table download", "");
 
-        day_select = (MaterialSpinner) view.findViewById(R.id.day_select);
-        day_select.setItems(day_list);
-
-        if(sharedPreferences.contains("table download")){
+        if (sharedPreferences.contains("table download")) {
             ArrayList<String> today_tt = new ArrayList<>();
             try {
                 today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
@@ -94,32 +88,9 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             refresh();
         }
-
-        day_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                today_day = day_list[position];
-                if (sharedPreferences.contains("table download")) {
-                    ArrayList<String> today_tt = new ArrayList<>();
-                    try {
-                        today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
-                        time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
-                        setText(today_tt, time_tt);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    getData();
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-                    sharedPreferences.edit().putString("table download", "1").apply();
-                }
-            }
-        });
 
         getDay();
 
@@ -130,17 +101,38 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
             }
         });
 
-        btnClass.setOnClickListener(new View.OnClickListener() {
+        bv.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getContext(), Popup_timetable_activity.class);
-                startActivity(go);
+            public void onNavigationChanged(View view, int position) {
+                if(position == 6){
+                    bv.setCurrentActiveItem(prevPos);
+                    Intent go = new Intent(getContext(), Popup_timetable_activity.class);
+                    startActivity(go);
+                }
+                else {
+                    prevPos = position;
+                    today_day = day_list[position];
+                    if (sharedPreferences.contains("table download")) {
+                        ArrayList<String> today_tt = new ArrayList<>();
+                        try {
+                            today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
+                            time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+                            setText(today_tt, time_tt);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        getData();
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().putString("table download", "1").apply();
+                    }
+                }
             }
         });
         return view;
     }
 
-    private void refresh(){
+    private void refresh() {
         time_tt.removeAll(time_tt);
         monday_tt.removeAll(monday_tt);
         tuesday_tt.removeAll(tuesday_tt);
@@ -151,6 +143,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         getData();
         refreshing();
     }
+
     @Override
     public void reset() {
 
@@ -344,6 +337,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
                 try {
                     today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
                     time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
+                    Toast.makeText(getActivity(), ""+today_tt, Toast.LENGTH_SHORT).show();
                     setText(today_tt, time_tt);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -380,32 +374,38 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         switch (weekDay) {
             case 1:
                 today_day = "Monday";
-                day_select.setSelectedIndex(0);
+                bv.setCurrentActiveItem(0);
+                prevPos = 0;
                 break;
             case 2:
                 today_day = "Tuesday";
-                day_select.setSelectedIndex(1);
+                bv.setCurrentActiveItem(1);
+                prevPos = 1;
                 break;
             case 3:
                 today_day = "Wednesday";
-                day_select.setSelectedIndex(2);
+                bv.setCurrentActiveItem(2);
+                prevPos = 2;
                 break;
             case 4:
                 today_day = "Thursday";
-                day_select.setSelectedIndex(3);
+                bv.setCurrentActiveItem(3);
+                prevPos = 3;
                 break;
             case 5:
                 today_day = "Friday";
-                day_select.setSelectedIndex(4);
-
+                bv.setCurrentActiveItem(4);
+                prevPos = 4;
                 break;
             case 6:
                 today_day = "Saturday";
-                day_select.setSelectedIndex(5);
+                bv.setCurrentActiveItem(5);
+                prevPos = 5;
                 break;
             default:
                 today_day = "Monday";
-                day_select.setSelectedIndex(1);
+                bv.setCurrentActiveItem(0);
+                prevPos = 0;
         }
         ArrayList<String> today_tt = new ArrayList<>();
         try {

@@ -1,6 +1,8 @@
 package com.xoi.smvitm;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,6 +54,8 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
     String basic_url = "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec?action=getBasic";
     MaterialSpinner branch_select;
     String[] branch_list = {"Basic Science", "Computer Science", "Electronics" , "Mechanical", "Civil"};
+    SharedPreferences sharedPreferences;
+    String student_branch;
 
     @Nullable
     @Override
@@ -60,12 +64,14 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
+        sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+        student_branch = sharedPreferences.getString("Student branch", "");
 
         url = basic_url;
-        refresh();
 
         branch_select = (MaterialSpinner) view.findViewById(R.id.branch_select);
         branch_select.setItems(branch_list);
+        setSpinner();
         branch_select.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
@@ -208,5 +214,34 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
     @Override
     public void pullProgress(float pullDistance, float pullProgress) {
 
+    }
+
+    public void setSpinner(){
+        switch (student_branch){
+            case "Computer Science":
+                branch_select.setSelectedIndex(1);
+                url = cs_url;
+                refresh();
+                break;
+            case "Electronics":
+                branch_select.setSelectedIndex(2);
+                url = ece_url;
+                refresh();
+                break;
+            case "Mechanical":
+                branch_select.setSelectedIndex(3);
+                url = mech_url;
+                refresh();
+                break;
+            case "Civil":
+                branch_select.setSelectedIndex(4);
+                url = civil_url;
+                refresh();
+                break;
+            default:
+                branch_select.setSelectedIndex(0);
+                url = basic_url;
+                refresh();
+        }
     }
 }

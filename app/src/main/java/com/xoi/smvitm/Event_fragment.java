@@ -42,6 +42,11 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     private ArrayList<String> descriptions = new ArrayList<>();
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> imgLinks = new ArrayList<>();
+    private ArrayList<String> conducts = new ArrayList<>();
+    private ArrayList<String> details = new ArrayList<>();
+    private ArrayList<String> dates = new ArrayList<>();
+    private ArrayList<String> brochures = new ArrayList<>();
+
     View view;
     SharedPreferences sharedPreferences;
     ProgressDialog loader;
@@ -106,6 +111,10 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
         descriptions.removeAll(descriptions);
         imgLinks.removeAll(imgLinks);
         titles.removeAll(titles);
+        brochures.removeAll(brochures);
+        dates.removeAll(dates);
+        conducts.removeAll(conducts);
+        details.removeAll(details);
         getCirculars();
         refreshing();
     }
@@ -146,6 +155,14 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 imgLinks.add(links_json);
                 String title_json = jo.getString("title");
                 titles.add(title_json);
+                String conduct_json = jo.getString("conducted");
+                conducts.add(conduct_json);
+                String detail_json = jo.getString("detaildescription");
+                details.add(detail_json);
+                String date_json = jo.getString("date");
+                dates.add(date_json);
+                String brochure_json = jo.getString("brochure");
+                brochures.add(brochure_json);
             }
             initRecyclerView();
         } catch (JSONException e) {
@@ -155,7 +172,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
 
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        event_recycler_view_adapter adapter = new event_recycler_view_adapter(titles, descriptions, imgLinks, getActivity());
+        event_recycler_view_adapter adapter = new event_recycler_view_adapter(titles, descriptions, imgLinks,conducts,details,dates, brochures,getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshLayout.setRefreshing(false);
