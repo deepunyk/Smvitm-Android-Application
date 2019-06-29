@@ -106,8 +106,9 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
             public void onNavigationChanged(View view, int position) {
                 if(position == 6){
                     bv.setCurrentActiveItem(prevPos);
-                    Intent go = new Intent(getContext(), Popup_timetable_activity.class);
+                    Intent go = new Intent(getActivity(), Popup_timetable_activity.class);
                     startActivity(go);
+                    getActivity().overridePendingTransition(R.anim.zoom, R.anim.stay);
                 }
                 else {
                     prevPos = position;

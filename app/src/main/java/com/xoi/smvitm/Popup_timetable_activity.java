@@ -28,18 +28,6 @@ public class Popup_timetable_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup_timetable_activity);
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width), (int)(height));
-
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.gravity = Gravity.CENTER;
-        params.x = 0;
-        params.y = -20;
-        getWindow().setAttributes(params);
 
         branch_select = (MaterialSpinner)findViewById(R.id.branch_select);
         sem_select = (MaterialSpinner)findViewById(R.id.sem_select);

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Home_fragment());
+        loadFragment(new Timetable_fragment());
 
 
 

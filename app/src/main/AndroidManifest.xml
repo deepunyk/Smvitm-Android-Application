@@ -12,10 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Event_popup_activity"></activity>
-        <activity
-            android:name=".Popup_timetable_activity"
-            android:theme="@style/AppTheme.PopMe" />
+        <activity android:name=".Popup_timetable_activity"/>
+        <activity android:name=".Event_popup_activity"/>
         <activity android:name=".splash_Activiy" />
         <activity android:name=".User_profile_Activity" />
         <activity android:name=".Edit_Existing_User_Profile_Activity" />
@@ -23,7 +21,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
