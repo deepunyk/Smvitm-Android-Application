@@ -212,4 +212,11 @@ public class User_profile_Activity extends AppCompatActivity {
         loading.dismiss();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent go = new Intent(User_profile_Activity.this, MainActivity.class);
+        this.startActivity(go);
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+    }
 }

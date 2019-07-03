@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     FadingTextView header_branch;
     SharedPreferences sharedPreferences;
     String student_branch;
+    long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Timetable_fragment());
+        loadFragment(new Home_fragment());
 
 
 
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     @Override
@@ -166,5 +168,16 @@ public class MainActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }
