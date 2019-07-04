@@ -16,12 +16,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 
 public class splash_Activiy extends AppCompatActivity {
     String login;
     Boolean internet;
     SharedPreferences sharedPreferences;
     ImageView img, bk_img;
+    private ArrayList<String> img_urls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +56,7 @@ public class splash_Activiy extends AppCompatActivity {
         if (internet) {
             login = sharedPreferences.getString("login_Activity", "");
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!sharedPreferences.contains("login_Activity")) {
-                        Intent go = new Intent(splash_Activiy.this, login_Activity.class);
-                        startActivity(go);
-                        finish();
-                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
-                    } else {
-                        Intent go = new Intent(splash_Activiy.this, MainActivity.class);
-                        startActivity(go);
-                        finish();
-                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
-                    }
-                }
-            }, 1500);
+            getImages();
         } else {
             new AlertDialog.Builder(splash_Activiy.this)
                     .setTitle("No internet connection")
@@ -81,5 +82,59 @@ public class splash_Activiy extends AppCompatActivity {
             return true;
         } else
             return false;
+    }
+
+    private void getImages() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycby43WKcwcdUyDKlYKf3z5I6-5lzeEak5Pa46UBXRK3qRIHm7W0/exec?action=getImages",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        parseItems(response);
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        int socketTimeOut = 50000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue queue = Volley.newRequestQueue(splash_Activiy.this);
+        queue.add(stringRequest);
+    }
+
+    private void parseItems(String jsonResposnce) {
+        try {
+            JSONObject jobj = new JSONObject(jsonResposnce);
+            JSONArray jarray = jobj.getJSONArray("images");
+
+            for (int i = 0; i < jarray.length(); i++) {
+                JSONObject jo = jarray.getJSONObject(i);
+                String link_json = jo.getString("link");
+                img_urls.add(link_json);
+            }
+            try {
+                sharedPreferences.edit().putString("Main carousel", ObjectSerializer.serialize(img_urls)).apply();
+            }
+            catch (Exception e) {
+            }
+            if (!sharedPreferences.contains("login_Activity")) {
+                Intent go = new Intent(splash_Activiy.this, login_Activity.class);
+                startActivity(go);
+                finish();
+                overridePendingTransition(R.anim.push_up_in, R.anim.stay);
+            } else {
+                Intent go = new Intent(splash_Activiy.this, MainActivity.class);
+                startActivity(go);
+                finish();
+                overridePendingTransition(R.anim.push_up_in, R.anim.stay);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

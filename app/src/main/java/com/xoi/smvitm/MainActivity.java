@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         header_branch.setTexts(array_txt);
         header_name.setText(student_name);
 
+        toolbar.setTitle("SMVITM");
         navigationView.setCheckedItem(R.id.home_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
