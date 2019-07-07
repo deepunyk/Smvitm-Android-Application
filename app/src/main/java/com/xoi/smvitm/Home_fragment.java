@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class Home_fragment extends Fragment {
     int[] sampleImages = {R.drawable.college_pic, R.drawable.main_bk, R.drawable.college_pic, R.drawable.main_bk};
     private ArrayList<String> img_urls = new ArrayList<>();
     SharedPreferences sharedPreferences;
+    CardView timetable_home, event_home, circular_home, more_home;
 
     @Nullable
     @Override
@@ -56,6 +58,7 @@ public class Home_fragment extends Fragment {
         carouselView = view.findViewById(R.id.carouselView);
         carouselView.setPageCount(img_urls.size());
         carouselView.setImageListener(imageListener);
+
         return view;
     }
 
