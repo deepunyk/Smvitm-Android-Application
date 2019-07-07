@@ -48,8 +48,7 @@ public class faculty_recycler_view_adapter extends RecyclerView.Adapter<faculty_
         viewHolder.branch.setText(branches.get(i));
         viewHolder.mobile.setText(mobiles.get(i));
         viewHolder.email.setText(emails.get(i));
-        Glide.with(mContext).load(photolinks.get(i)).into(viewHolder.img);
-
+        Glide.with(mContext).load(photolinks.get(i)).placeholder(R.drawable.user_profile_icon).error(R.drawable.college_logo).into(viewHolder.imgFaculty);
     }
 
     @Override
@@ -63,7 +62,7 @@ public class faculty_recycler_view_adapter extends RecyclerView.Adapter<faculty_
 
         ConstraintLayout parent_layout;
         TextView name, designation, branch, mobile, email;
-        ImageView img;
+        ImageView imgFaculty;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +72,7 @@ public class faculty_recycler_view_adapter extends RecyclerView.Adapter<faculty_
             designation = itemView.findViewById(R.id.designation);
             mobile = itemView.findViewById(R.id.mobile);
             email = itemView.findViewById(R.id.email);
-            img = itemView.findViewById(R.id.pop_img);
+            imgFaculty = itemView.findViewById(R.id.imgFaculty);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }
     }
