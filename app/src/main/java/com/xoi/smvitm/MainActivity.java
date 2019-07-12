@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Home_fragment());
 
-
-
         final NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);
         header_name = (TextView)hView.findViewById(R.id.header_name);
