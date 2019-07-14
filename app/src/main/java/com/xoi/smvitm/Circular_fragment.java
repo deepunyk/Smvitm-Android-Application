@@ -47,7 +47,6 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_circular,container,false);
-        refresh = (Button)view.findViewById(R.id.btnRefresh);
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
 

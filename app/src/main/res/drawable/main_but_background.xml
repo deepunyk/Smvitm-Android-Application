@@ -4,8 +4,11 @@
     <solid
         android:color="#faf7fe"/>
     <stroke
-        android:color="@color/colorPrimary"
+        android:color="@color/white"
         android:width="3dp"/>
+    <gradient
+        android:startColor="@color/colorPrimary"
+        android:endColor="@color/light_black"/>
     <corners
         android:radius="0dp"/>
 

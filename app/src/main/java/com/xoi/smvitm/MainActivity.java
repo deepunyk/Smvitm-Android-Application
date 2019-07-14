@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String student_branch;
     long backPressedTime;
+    public static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Home_fragment());
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
+        navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);
         header_name = (TextView)hView.findViewById(R.id.header_name);
         header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);

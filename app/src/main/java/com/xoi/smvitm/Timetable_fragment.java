@@ -338,7 +338,6 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
                 try {
                     today_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString(today_day, ObjectSerializer.serialize(new ArrayList<String>())));
                     time_tt = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Time", ObjectSerializer.serialize(new ArrayList<String>())));
-                    Toast.makeText(getActivity(), ""+today_tt, Toast.LENGTH_SHORT).show();
                     setText(today_tt, time_tt);
                 } catch (Exception e) {
                     e.printStackTrace();

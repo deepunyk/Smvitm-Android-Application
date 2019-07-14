@@ -183,6 +183,11 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         }
         return i;
     }
-
+    public void onBackPressed() {
+        Intent go = new Intent(Edit_Existing_User_Profile_Activity.this, User_profile_Activity.class);
+        this.startActivity(go);
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+    }
 
 }

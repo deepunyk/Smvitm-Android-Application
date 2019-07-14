@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -76,6 +77,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                MainActivity.navigationView.setCheckedItem(R.id.timetable_nav);
             }
         });
         circular_home.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +89,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                MainActivity.navigationView.setCheckedItem(R.id.circular_nav);
             }
         });
         event_home.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +101,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                MainActivity.navigationView.setCheckedItem(R.id.events_nav);
             }
         });
         more_home.setOnClickListener(new View.OnClickListener() {

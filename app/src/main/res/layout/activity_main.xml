@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="10dp"
-            android:theme="@style/Toolbar_main" />
+            android:theme="@style/Toolbar_main"
+            app:title="SMVITM"/>
 
         <FrameLayout
             android:id="@+id/contentContainer"

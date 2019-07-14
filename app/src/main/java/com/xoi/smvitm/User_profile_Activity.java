@@ -31,7 +31,7 @@ import java.util.Map;
 public class User_profile_Activity extends AppCompatActivity {
 
     TextView name, branch, sem, section,usn;
-    Button btnRefresh, btnEdit;
+    Button  btnEdit;
     ProgressDialog loading;
     Toolbar toolbar;
     String student_name, student_usn, student_branch, student_sem, student_section;
@@ -71,7 +71,6 @@ public class User_profile_Activity extends AppCompatActivity {
             refreshUserInfo();
         }
 
-        btnRefresh = (Button)findViewById(R.id.btnRefresh);
         btnEdit = (Button)findViewById(R.id.btnEdit);
 
 
@@ -86,12 +85,6 @@ public class User_profile_Activity extends AppCompatActivity {
             }
         });
         toolbar.setTitle("User Profile");
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshUserInfo();
-            }
-        });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
