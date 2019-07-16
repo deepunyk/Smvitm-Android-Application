@@ -132,7 +132,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/titillium_web_semibold"
             android:gravity="center"
-            android:text="Please note that only your current class timetable will be available for offline purpose."
+            android:text="You cannot access other class timetables in this version due to server restrictions. Sorry for the inconvenience."
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="normal"

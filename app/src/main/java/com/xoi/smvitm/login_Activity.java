@@ -83,7 +83,7 @@ public class login_Activity extends AppCompatActivity {
 
             } catch (ApiException e) {
                 loading.setVisibility(View.GONE);
-                Toast.makeText(this, "Log in failed, please try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
             }
         }
     }

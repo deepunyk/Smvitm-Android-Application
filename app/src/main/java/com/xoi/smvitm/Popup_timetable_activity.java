@@ -1,6 +1,8 @@
 package com.xoi.smvitm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -21,8 +23,10 @@ public class Popup_timetable_activity extends AppCompatActivity {
     String[] branch_list = {"Computer Science","Electronics","Mechanical","Civil"};
     String[] section_list = {"A","B","C"};
     String[] sem_list = {"1","3","5","7"};
-    int branch, sem, section;
+    int brancht, semt, sectiont;
+    String sbranch, ssection, ssem;
     Button apply;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +39,22 @@ public class Popup_timetable_activity extends AppCompatActivity {
         branch_select.setItems(branch_list);
         sem_select.setItems(sem_list);
         section_select.setItems(section_list);
+        sharedPreferences = getApplicationContext().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
 
         apply = (Button)findViewById(R.id.apply);
 
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                branch = branch_select.getSelectedIndex();
-                sem = sem_select.getSelectedIndex();
-                section = section_select.getSelectedIndex();
-                Timetable_fragment.branch = branch;
-                Timetable_fragment.sem = sem;
-                Timetable_fragment.section = section;
+                brancht = branch_select.getSelectedIndex();
+                semt = sem_select.getSelectedIndex();
+                sectiont = section_select.getSelectedIndex();
+                sbranch = branch_list[brancht];
+                ssection = section_list[sectiont];
+                ssem = sem_list[semt];
+                sharedPreferences.edit().putString("T branch", sbranch).apply();
+                sharedPreferences.edit().putString("T sem", sbranch).apply();
+                sharedPreferences.edit().putString("T section", sbranch).apply();
                 finish();
             }
         });
