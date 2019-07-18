@@ -1,5 +1,6 @@
 package com.xoi.smvitm;
 
+import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +53,13 @@ public class splash_Activiy extends AppCompatActivity {
 
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
+
+        if(sharedPreferences.contains("First Time")){
+
+        }else{
+            sharedPreferences.edit().clear().apply();
+            sharedPreferences.edit().putString("First Time", "1").apply();
+        }
 
         if (internet) {
             login = sharedPreferences.getString("login_Activity", "");

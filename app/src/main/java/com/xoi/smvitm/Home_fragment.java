@@ -107,7 +107,7 @@ public class Home_fragment extends Fragment {
         more_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getActivity(), "Additional features coming soon.", Toast.LENGTH_SHORT).show();
             }
         });
         return view;

@@ -33,6 +33,7 @@ public class login_Activity extends AppCompatActivity {
     private int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private SpinKitView loading;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class login_Activity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
+        sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
 
         StatusBarUtil.setTransparent(login_Activity.this);
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -90,45 +93,97 @@ public class login_Activity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         try {
             String personGivenName = acct.getGivenName();
-            String stud_usn = acct.getEmail().substring(acct.getEmail().indexOf(".") + 1, acct.getEmail().indexOf("@"));
-            stud_usn = "4MW" + stud_usn.toUpperCase();
-            final String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            store(personGivenName, stud_usn, personEmail, personId);
-            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-            mAuth.signInWithCredential(credential)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            loading.setVisibility(View.GONE);
-                            if (task.isSuccessful()) {
-                                try {
-                                    String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
-                                    SharedPreferences sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-                                    sharedPreferences.edit().putString("login_Activity", "1").apply();
-                                    Intent go = new Intent(login_Activity.this, User_profile_Activity.class);
-                                    startActivity(go);
-                                    finish();
-                                    overridePendingTransition(R.anim.push_up_in, R.anim.stay);
-                                } catch (Exception e) {
-                                    Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
-                                }
+            String code = acct.getEmail().substring(acct.getEmail().indexOf(".") + 1, acct.getEmail().indexOf("@"));
+            String chk =code.substring(0,1);
+            if(chk.equals("1")){
+                sharedPreferences.edit().putString("Profile", "Student").apply();
+                String stud_usn = code;
+                stud_usn = "4MW" + stud_usn.toUpperCase();
+                final String personEmail = acct.getEmail();
+                String personId = acct.getId();
+                storeStudent(personGivenName, stud_usn, personEmail, personId);
+                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                loading.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    try {
+                                        String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
+                                        sharedPreferences.edit().putString("login_Activity", "1").apply();
+                                        Intent go = new Intent(login_Activity.this, User_profile_Activity.class);
+                                        startActivity(go);
+                                        finish();
+                                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
+                                    } catch (Exception e) {
+                                        Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
+                                    }
 
-                            } else {
-                                Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
+                        });
+            }
+            else {
+                sharedPreferences.edit().putString("Profile", "Faculty").apply();
+                final String personEmail = acct.getEmail();
+                storeFaculty(code);
+                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                loading.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    try {
+                                        String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
+                                        sharedPreferences.edit().putString("login_Activity", "1").apply();
+                                        Intent go = new Intent(login_Activity.this, MainActivity.class);
+                                        startActivity(go);
+                                        finish();
+                                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
+                                    } catch (Exception e) {
+                                        Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
+                                    }
+
+                                } else {
+                                    Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+            }
+
         }
         catch (Exception e){
             Toast.makeText(this, "Please use sode-edu account to log in", Toast.LENGTH_SHORT).show();
         }
     }
-    private void store(String givenName, String stud_usn, String email, String id){
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+    private void storeStudent(String givenName, String stud_usn, String email, String id){
         sharedPreferences.edit().putString("givenName", givenName).apply();
         sharedPreferences.edit().putString("stud_usn", stud_usn).apply();
         sharedPreferences.edit().putString("Student Email", email).apply();
         sharedPreferences.edit().putString("id", id).apply();;
+    }
+
+    private void storeFaculty(String branch){
+        switch (branch){
+            case "cs":
+                branch = "Computer Science";
+                break;
+            case "ec":
+                branch = "Electronics";
+                break;
+            case "mech":
+                branch = "Mechanical";
+                break;
+            case "civil":
+                branch = "Civil";
+                break;
+            default:
+                branch = "N/A";
+        }
+        sharedPreferences.edit().putString("Faculty branch", branch).apply();
     }
 }

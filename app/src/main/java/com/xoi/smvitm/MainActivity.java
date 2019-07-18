@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     String student_branch;
     long backPressedTime;
     public static NavigationView navigationView;
+    String profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
 
-        String student_name = sharedPreferences.getString("Student name", "");
-        String student_sem = sharedPreferences.getString("Student sem","");
-        student_branch = sharedPreferences.getString("Student branch", "");
-        String student_section = sharedPreferences.getString("Student section","");
-        student_sem = student_sem + " " + student_section;
-        String student_usn = sharedPreferences.getString("Student usn", "");
-        String[] array_txt = {student_branch, student_sem,student_usn};
+        profile = sharedPreferences.getString("Profile","");
+
+
 
         drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
@@ -74,9 +71,22 @@ public class MainActivity extends AppCompatActivity {
         View hView =  navigationView.getHeaderView(0);
         header_name = (TextView)hView.findViewById(R.id.header_name);
         header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);
-        header_branch.setTexts(array_txt);
-        header_name.setText(student_name);
+        if(profile.equals("Student")) {
+            String student_name = sharedPreferences.getString("Student name", "");
+            String student_sem = sharedPreferences.getString("Student sem","");
+            student_branch = sharedPreferences.getString("Student branch", "");
+            String student_section = sharedPreferences.getString("Student section","");
+            student_sem = student_sem + " " + student_section;
+            String student_usn = sharedPreferences.getString("Student usn", "");
+            String[] array_txt = {student_branch, student_sem,student_usn};
 
+            header_name.setText(student_name);
+            header_branch.setTexts(array_txt);
+        }
+        else{
+            header_name.setText(sharedPreferences.getString("Faculty name",""));
+            header_branch.setText(sharedPreferences.getString("Faculty branch",""));
+        }
         toolbar.setTitle("SMVITM");
         navigationView.setCheckedItem(R.id.home_nav);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -165,10 +175,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void navigation_profile(View view){
-        Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
-        startActivity(go);
-        finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+        if(profile.equals("Student")) {
+            Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
+            startActivity(go);
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+        }
+        else{
+            Intent go = new Intent(MainActivity.this, Faculty_profile_activity.class);
+            startActivity(go);
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+        }
+
 
     }
 

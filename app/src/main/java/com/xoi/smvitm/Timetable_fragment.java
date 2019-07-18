@@ -93,9 +93,9 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         seventh = new ArrayList<>();
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        section = sharedPreferences.getString("Student section", "");
-        branch = sharedPreferences.getString("Student branch", "");
-        sem = sharedPreferences.getString("Student sem", "");
+        section = sharedPreferences.getString("Student section", "A");
+        branch = sharedPreferences.getString("Student branch", "Computer Science");
+        sem = sharedPreferences.getString("Student sem", "A");
         sharedPreferences.edit().remove("T section").apply();
         sharedPreferences.edit().remove("T branch").apply();
         sharedPreferences.edit().remove("T sem").apply();
