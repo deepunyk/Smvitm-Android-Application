@@ -39,6 +39,8 @@ public class splash_Activiy extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ImageView img, bk_img;
     private ArrayList<String> img_urls = new ArrayList<>();
+    private ArrayList<String> car_head = new ArrayList<>();
+    private ArrayList<String> car_sub = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +56,8 @@ public class splash_Activiy extends AppCompatActivity {
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
 
-        if(sharedPreferences.contains("First Time")){
-
-        }else{
-            sharedPreferences.edit().clear().apply();
-            sharedPreferences.edit().putString("First Time", "1").apply();
-        }
 
         if (internet) {
-            login = sharedPreferences.getString("login_Activity", "");
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
             getImages();
         } else {
@@ -124,9 +119,15 @@ public class splash_Activiy extends AppCompatActivity {
                 JSONObject jo = jarray.getJSONObject(i);
                 String link_json = jo.getString("link");
                 img_urls.add(link_json);
+                String head_json = jo.getString("head");
+                car_head.add(head_json);
+                String sub_json = jo.getString("sub");
+                car_sub.add(sub_json);
             }
             try {
-                sharedPreferences.edit().putString("Main carousel", ObjectSerializer.serialize(img_urls)).apply();
+                sharedPreferences.edit().putString("Main carousel link", ObjectSerializer.serialize(img_urls)).apply();
+                sharedPreferences.edit().putString("Main carousel head", ObjectSerializer.serialize(car_head)).apply();
+                sharedPreferences.edit().putString("Main carousel sub", ObjectSerializer.serialize(car_sub)).apply();
             }
             catch (Exception e) {
             }

@@ -46,7 +46,7 @@ public class login_Activity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-        sharedPreferences = login_Activity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
 
         StatusBarUtil.setTransparent(login_Activity.this);
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);

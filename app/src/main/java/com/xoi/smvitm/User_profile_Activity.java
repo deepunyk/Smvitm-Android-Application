@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -78,10 +79,15 @@ public class User_profile_Activity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent main = new Intent(User_profile_Activity.this, MainActivity.class);
-                startActivity(main);
-                finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+                try {
+                    Intent go = new Intent(User_profile_Activity.this, MainActivity.class);
+                    startActivity(go);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+                }
+                catch (Exception e){
+                    Toast.makeText(User_profile_Activity.this, ""+e, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         toolbar.setTitle("User Profile");

@@ -53,7 +53,7 @@ public class Edit_New_User_Profile_Activity extends AppCompatActivity {
         section.setItems(section_list);
         semester.setItems(semester_list);
 
-        sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         student_usn = sharedPreferences.getString("stud_usn", "");
         student_email = sharedPreferences.getString("Student Email", "");
         student_branch = student_email.substring(student_email.indexOf(".") + 3, student_email.indexOf(".") + 5);

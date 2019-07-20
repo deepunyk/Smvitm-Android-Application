@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sharedPreferences = this.getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
 
         profile = sharedPreferences.getString("Profile","");
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("SMVITM");
                         break;
                     case R.id.timetable_nav:
-                        fragment = new Timetable_fragment();
+                        fragment = new Beta_timetable_fragment();
                         toolbar.setTitle("Timetable");
                         break;
                     case R.id.circular_nav:
@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            Fragment fragment = new Home_fragment();
+            loadFragment(fragment);
         }
         backPressedTime = System.currentTimeMillis();
     }

@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -46,8 +48,11 @@ public class Home_fragment extends Fragment {
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.college_pic, R.drawable.main_bk, R.drawable.college_pic, R.drawable.main_bk};
     private ArrayList<String> img_urls = new ArrayList<>();
+    private ArrayList<String> car_head = new ArrayList<>();
+    private ArrayList<String> car_sub = new ArrayList<>();
     SharedPreferences sharedPreferences;
     CardView timetable_home, event_home, circular_home, more_home;
+    TextView carHead,carSub;
 
     @Nullable
     @Override
@@ -55,14 +60,38 @@ public class Home_fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         try {
-            img_urls = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel", ObjectSerializer.serialize(new ArrayList<String>())));
+            img_urls = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel link", ObjectSerializer.serialize(new ArrayList<String>())));
+            car_head = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel head", ObjectSerializer.serialize(new ArrayList<String>())));
+            car_sub = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel sub", ObjectSerializer.serialize(new ArrayList<String>())));
         } catch (Exception e) {
 
         }
+        carHead = (TextView)view.findViewById(R.id.carHead);
+        carSub = (TextView)view.findViewById(R.id.carSub);
         carouselView = view.findViewById(R.id.carouselView);
         carouselView.setPageCount(img_urls.size());
         carouselView.setImageListener(imageListener);
+        carHead.setText(car_head.get(0));
+        carSub.setText(car_sub.get(0));
 
+        carouselView.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                carHead.setAlpha(1-v);
+                carSub.setAlpha(1-v);
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                carHead.setText(car_head.get(i));
+                carSub.setText(car_sub.get(i));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         timetable_home = (CardView)view.findViewById(R.id.timetable_home);
         circular_home = (CardView)view.findViewById(R.id.circular_home);
         event_home = (CardView)view.findViewById(R.id.event_home);
@@ -71,7 +100,7 @@ public class Home_fragment extends Fragment {
         timetable_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new Timetable_fragment();
+                Fragment fragment = new Beta_timetable_fragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
@@ -119,6 +148,7 @@ public class Home_fragment extends Fragment {
             Glide.with(getContext()).load(img_urls.get(position)).into(imageView);
         }
     };
+
 
 
 }

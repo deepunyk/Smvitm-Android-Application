@@ -3,6 +3,8 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/</item>
         <item>@font/acme</item>
+        <item>@font/amaranth</item>
+        <item>@font/amaranth_bold</item>
         <item>@font/asap</item>
         <item>@font/asap_medium</item>
         <item>@font/basic</item>
