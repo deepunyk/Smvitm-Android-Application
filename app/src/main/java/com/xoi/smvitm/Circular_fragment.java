@@ -1,5 +1,6 @@
 package com.xoi.smvitm;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -36,6 +38,7 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
     private ArrayList<String> descriptions = new ArrayList<>();
     private ArrayList<String> links = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
+    private ArrayList<String> total = new ArrayList<>();
     View view;
     SharedPreferences sharedPreferences;
     ProgressDialog loader;
@@ -57,6 +60,7 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
                 links = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular link", ObjectSerializer.serialize(new ArrayList<String>())));
                 dates = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Circular dates", ObjectSerializer.serialize(new ArrayList<String>())));
                 initRecyclerView();
+                checkCircular();
             } catch (Exception e) {
                 refresh();
             }
@@ -171,5 +175,50 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
     @Override
     public void pullProgress(float pullDistance, float pullProgress) {
 
+    }
+
+    private void checkCircular() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxIpWEw0QJ5FEc_106HZqOS6DD2QKpRdoZ1nLmUxDyda-v8M-g/exec?action=getCirculars",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        parseItems1(response);
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        int socketTimeOut = 50000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(stringRequest);
+    }
+
+    private void parseItems1(String jsonResposnce) {
+        try {
+            JSONObject jobj = new JSONObject(jsonResposnce);
+            JSONArray jarray = jobj.getJSONArray("circulars");
+
+            for (int i = 0; i < jarray.length(); i++) {
+                JSONObject jo = jarray.getJSONObject(i);
+                String description_json = jo.getString("description");
+                total.add(description_json);
+            }
+            int totalItems, prevTotalItems;
+            totalItems = total.toArray().length;
+            prevTotalItems = descriptions.toArray().length;
+            if(totalItems != prevTotalItems){
+                Toast.makeText(getActivity(), "You have news Circulars. Swipe down to refresh", Toast.LENGTH_LONG).show();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -145,7 +145,7 @@ public class Home_fragment extends Fragment {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            Glide.with(getContext()).load(img_urls.get(position)).into(imageView);
+            Glide.with(getContext()).load(img_urls.get(position)).placeholder(R.drawable.loading_carousel).into(imageView);
         }
     };
 

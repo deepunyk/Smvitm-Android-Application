@@ -197,8 +197,9 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         else{
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
             Fragment fragment = new Home_fragment();
+            navigationView.setCheckedItem(R.id.home_nav);
+            toolbar.setTitle("SMVITM");
             loadFragment(fragment);
         }
         backPressedTime = System.currentTimeMillis();
