@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class Home_fragment extends Fragment {
     SharedPreferences sharedPreferences;
     CardView timetable_home, event_home, circular_home, more_home;
     TextView carHead,carSub;
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -66,6 +68,7 @@ public class Home_fragment extends Fragment {
         } catch (Exception e) {
 
         }
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         carHead = (TextView)view.findViewById(R.id.carHead);
         carSub = (TextView)view.findViewById(R.id.carSub);
         carouselView = view.findViewById(R.id.carouselView);
@@ -107,6 +110,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 MainActivity.navigationView.setCheckedItem(R.id.timetable_nav);
+                toolbar.setTitle("Timetable");
             }
         });
         circular_home.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +123,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 MainActivity.navigationView.setCheckedItem(R.id.circular_nav);
+                toolbar.setTitle("Circulars");
             }
         });
         event_home.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +136,7 @@ public class Home_fragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 MainActivity.navigationView.setCheckedItem(R.id.events_nav);
+                toolbar.setTitle("Events");
             }
         });
         more_home.setOnClickListener(new View.OnClickListener() {

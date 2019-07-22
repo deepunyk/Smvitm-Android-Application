@@ -63,7 +63,7 @@ public class login_Activity extends AppCompatActivity {
                         sign.setAlpha(1f);
                         sign.setBackgroundColor(getResources().getColor(R.color.white));
                     }
-                }, 50 );//time in milisecond
+                }, 50 );
                 loading.setVisibility(View.VISIBLE);
                 signIn();
             }
@@ -127,32 +127,7 @@ public class login_Activity extends AppCompatActivity {
                         });
             }
             else {
-                sharedPreferences.edit().putString("Profile", "Faculty").apply();
-                final String personEmail = acct.getEmail();
-                storeFaculty(code);
-                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-                mAuth.signInWithCredential(credential)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                loading.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    try {
-                                        String result = personEmail.substring(personEmail.indexOf("@") + 1, personEmail.indexOf(".in"));
-                                        sharedPreferences.edit().putString("login_Activity", "1").apply();
-                                        Intent go = new Intent(login_Activity.this, MainActivity.class);
-                                        startActivity(go);
-                                        finish();
-                                        overridePendingTransition(R.anim.push_up_in, R.anim.stay);
-                                    } catch (Exception e) {
-                                        Toast.makeText(login_Activity.this, "Please use sode-edu account to log in", Toast.LENGTH_LONG).show();
-                                    }
-
-                                } else {
-                                    Toast.makeText(login_Activity.this, "Server error", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                Toast.makeText(this, "This app is student version. We will be giving access to faculties in the coming updates", Toast.LENGTH_LONG).show();
             }
 
         }
