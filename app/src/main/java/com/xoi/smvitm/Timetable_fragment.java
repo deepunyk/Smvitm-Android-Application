@@ -53,21 +53,20 @@ import java.util.Calendar;
 
 public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
-    private ArrayList<String> firsts = new ArrayList<>();
-    private ArrayList<String> seconds = new ArrayList<>();
-    private ArrayList<String> thirds = new ArrayList<>();
-    private ArrayList<String> fourths = new ArrayList<>();
-    private ArrayList<String> fifths = new ArrayList<>();
-    private ArrayList<String> sixths = new ArrayList<>();
-    private ArrayList<String> sevenths = new ArrayList<>();
-    private ArrayList<String> classes = new ArrayList<>();
-    private ArrayList<String> timings = new ArrayList<>();
+    private ArrayList<String> arr_time = new ArrayList<>();
+    private ArrayList<String> arr_monday = new ArrayList<>();
+    private ArrayList<String> arr_tuesday = new ArrayList<>();
+    private ArrayList<String> arr_wednesday = new ArrayList<>();
+    private ArrayList<String> arr_thursday = new ArrayList<>();
+    private ArrayList<String> arr_friday = new ArrayList<>();
+    private ArrayList<String> arr_saturday = new ArrayList<>();
+    private ArrayList<String> arr_curDay = new ArrayList<>();
 
+    String url = "https://script.google.com/macros/s/AKfycbyHjV637lf3NmMpuk4mOtCHBGZLGSgqY3nlfh0uAAdnW00ke02x/exec?action=";
     String today_day;
     String[] day_list = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     View view;
     SharedPreferences sharedPreferences;
-    ArrayList<String> first, second, third, fourth, fifth, sixth, seventh;
     RecyclerView recyclerView;
     RecyclerRefreshLayout refreshLayout;
     ProgressDialog loader;
@@ -84,14 +83,6 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
         view = inflater.inflate(R.layout.fragment_timebtable, container, false);
 
-        first = new ArrayList<>();
-        second = new ArrayList<>();
-        third = new ArrayList<>();
-        fourth = new ArrayList<>();
-        fifth = new ArrayList<>();
-        sixth = new ArrayList<>();
-        seventh = new ArrayList<>();
-
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         section = sharedPreferences.getString("Student section", "A");
         branch = sharedPreferences.getString("Student branch", "Computer Science");
@@ -99,6 +90,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         sharedPreferences.edit().remove("T section").apply();
         sharedPreferences.edit().remove("T branch").apply();
         sharedPreferences.edit().remove("T sem").apply();
+        sharedPreferences.edit().remove("Table download").apply();
 
         setCurClass(getActivity(), branch, sem, section);
 
@@ -141,85 +133,37 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         return view;
     }
 
-
-
     private void checkDownload(){
-        first.removeAll(first);
-        second.removeAll(second);
-        third.removeAll(third);
-        fourth.removeAll(fourth);
-        fifth.removeAll(fifth);
-        sixth.removeAll(sixth);
-        seventh.removeAll(seventh);
-        classes.removeAll(classes);
-        timings.removeAll(timings);
         if(sharedPreferences.contains("Table download")){
             setData();
         }
         else{
             refresh();
         }
-
     }
 
     private void refresh() {
-        sharedPreferences.edit().remove("First tt").apply();
-        sharedPreferences.edit().remove("Second tt").apply();
-        sharedPreferences.edit().remove("Third tt").apply();
-        sharedPreferences.edit().remove("Fourth tt").apply();
-        sharedPreferences.edit().remove("Fifth tt").apply();
-        sharedPreferences.edit().remove("Sixth tt").apply();
-        sharedPreferences.edit().remove("Seventh tt").apply();
-        first.removeAll(first);
-        second.removeAll(second);
-        third.removeAll(third);
-        fourth.removeAll(fourth);
-        fifth.removeAll(fifth);
-        sixth.removeAll(sixth);
-        seventh.removeAll(seventh);
-        classes.removeAll(classes);
-        timings.removeAll(timings);
+        sharedPreferences.edit().remove("Monday tt").apply();
+        sharedPreferences.edit().remove("Tuesday tt").apply();
+        sharedPreferences.edit().remove("Wednesday tt").apply();
+        sharedPreferences.edit().remove("Thursday tt").apply();
+        sharedPreferences.edit().remove("Friday tt").apply();
+        sharedPreferences.edit().remove("Saturday tt").apply();
+        sharedPreferences.edit().remove("Time tt").apply();
+        arr_time.removeAll(arr_time);
+        arr_monday.removeAll(arr_monday);
+        arr_tuesday.removeAll(arr_tuesday);
+        arr_wednesday.removeAll(arr_wednesday);
+        arr_thursday.removeAll(arr_thursday);
+        arr_friday.removeAll(arr_friday);
+        arr_saturday.removeAll(arr_saturday);
+        arr_curDay.removeAll(arr_curDay);
         getTimetable();
         refreshing();
     }
 
-    @Override
-    public void reset() {
-
-    }
-
-    @Override
-    public void refreshing() {
-        loader.setTitle("Updating timetable");
-        loader.setMessage("Please wait...");
-        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loader.setCancelable(false);
-        loader.show();
-    }
-
-    @Override
-    public void refreshComplete() {
-        loader.dismiss();
-    }
-
-    @Override
-    public void pullToRefresh() {
-
-    }
-
-    @Override
-    public void releaseToRefresh() {
-
-    }
-
-    @Override
-    public void pullProgress(float pullDistance, float pullProgress) {
-
-    }
-
-
     private void getTimetable() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbyHjV637lf3NmMpuk4mOtCHBGZLGSgqY3nlfh0uAAdnW00ke02x/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url+curClass,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -244,82 +188,58 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     private void parseItems(String jsonResposnce) {
         try {
             JSONObject jobj = new JSONObject(jsonResposnce);
-            JSONArray jarray = jobj.getJSONArray(curClass);
-            Toast.makeText(getActivity(), curClass, Toast.LENGTH_SHORT).show();
+            JSONArray jarray = jobj.getJSONArray("class");
+
             for (int i = 0; i < jarray.length(); i++) {
                 JSONObject jo = jarray.getJSONObject(i);
-                String first_json = jo.getString("First");
-                firsts.add(first_json);
-                String second_json = jo.getString("Second");
-                seconds.add(second_json);
-                String third_json = jo.getString("Third");
-                thirds.add(third_json);
-                String fourth_json = jo.getString("Fourth");
-                fourths.add(fourth_json);
-                String fifth_json = jo.getString("Fifth");
-                fifths.add(fifth_json);
-                String sixth_json = jo.getString("Sixth");
-                sixths.add(sixth_json);
-                String seventh_json = jo.getString("Seventh");
-                sevenths.add(seventh_json);
+                String monday_json = jo.getString("monday");
+                arr_monday.add(monday_json);
+                String tuesday_json = jo.getString("tuesday");
+                arr_tuesday.add(tuesday_json);
+                String wednesday_json = jo.getString("wednesday");
+                arr_wednesday.add(wednesday_json);
+                String thursday_json = jo.getString("thursday");
+                arr_thursday.add(thursday_json);
+                String friday_json = jo.getString("friday");
+                arr_friday.add(friday_json);
+                String saturday_json = jo.getString("saturday");
+                arr_saturday.add(saturday_json);
+                String time_json = jo.getString("time");
+                arr_time.add(time_json);
             }
-            downloadData();
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), "Error while downloading data", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    private void downloadData(){
-        try {
-            sharedPreferences.edit().putString("First tt", ObjectSerializer.serialize(firsts)).apply();
-            sharedPreferences.edit().putString("Second tt", ObjectSerializer.serialize(seconds)).apply();
-            sharedPreferences.edit().putString("Third tt", ObjectSerializer.serialize(thirds)).apply();
-            sharedPreferences.edit().putString("Fourth tt", ObjectSerializer.serialize(fourths)).apply();
-            sharedPreferences.edit().putString("Fifth tt", ObjectSerializer.serialize(fifths)).apply();
-            sharedPreferences.edit().putString("Sixth tt", ObjectSerializer.serialize(sixths)).apply();
-            sharedPreferences.edit().putString("Seventh tt", ObjectSerializer.serialize(sevenths)).apply();
-            sharedPreferences.edit().putString("Table download", "1").apply();
+            if(today_day.equals("Monday")){
+                arr_curDay = arr_monday;
+            }
+            else if(today_day.equals("Tuesday")){
+                arr_curDay = arr_tuesday;
+            }
+            else if(today_day.equals("Wednesday")){
+                arr_curDay = arr_wednesday;
+            }
+            else if(today_day.equals("Thursday")){
+                arr_curDay = arr_thursday;
+            }else if(today_day.equals("Friday")){
+                arr_curDay = arr_thursday;
+            }
+            else if(today_day.equals("Saturday")){
+                arr_curDay = arr_friday;
+            }else{
+                arr_curDay = arr_monday;
+            }
             setData();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        catch (Exception e){
-            Toast.makeText(getActivity(), "Server Error. Please try restarting the app", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     private void setData(){
-        try {
-            firsts = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("First tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            seconds = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Second tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            thirds = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Third tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            fourths = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Fourth tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            fifths = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Fifth tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            sixths = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Sixth tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            sevenths = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Seventh tt", ObjectSerializer.serialize(new ArrayList<String>())));
-            timings.add(firsts.get(0));
-            timings.add(seconds.get(0));
-            timings.add(thirds.get(0));
-            timings.add(fourths.get(0));
-            timings.add(fifths.get(0));
-            timings.add(sixths.get(0));
-            timings.add(sevenths.get(0));
-            classes.add(firsts.get(weekDay));
-            classes.add(seconds.get(weekDay));
-            classes.add(thirds.get(weekDay));
-            classes.add(fourths.get(weekDay));
-            classes.add(fifths.get(weekDay));
-            classes.add(sixths.get(weekDay));
-            classes.add(sevenths.get(weekDay));
-        }
-        catch (Exception e){
-            Toast.makeText(getActivity(), "Failed to update the timetable. Please restart the app and try again", Toast.LENGTH_SHORT).show();
-        }
-        initRecyclerView();
-    }
+        refresh();
 
+    }
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        Timetable_Recycler_ViewAdapter adapter = new Timetable_Recycler_ViewAdapter(classes,timings,getActivity());
+        Timetable_Recycler_ViewAdapter adapter = new Timetable_Recycler_ViewAdapter(arr_curDay,arr_time,getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshLayout.setRefreshing(false);
@@ -571,4 +491,29 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
 
     }
 
+
+    @Override
+    public void reset() {
+    }
+    @Override
+    public void refreshing() {
+        loader.setTitle("Updating timetable");
+        loader.setMessage("Please wait...");
+        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loader.setCancelable(false);
+        loader.show();
+    }
+    @Override
+    public void refreshComplete() {
+        loader.dismiss();
+    }
+    @Override
+    public void pullToRefresh() {
+    }
+    @Override
+    public void releaseToRefresh() {
+    }
+    @Override
+    public void pullProgress(float pullDistance, float pullProgress) {
+    }
 }
