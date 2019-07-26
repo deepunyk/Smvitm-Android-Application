@@ -73,6 +73,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     BubbleNavigationConstraintView bv;
     String branch, sem, section;
     String curClass;
+    public static int n = 0;
     int prevPos;
     int weekDay = 1;
 
@@ -90,7 +91,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         sharedPreferences.edit().remove("T section").apply();
         sharedPreferences.edit().remove("T branch").apply();
         sharedPreferences.edit().remove("T sem").apply();
-        sharedPreferences.edit().remove("Table download").apply();
+        //sharedPreferences.edit().remove("Table download").apply();
 
         setCurClass(getActivity(), branch, sem, section);
 
@@ -143,13 +144,14 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     }
 
     private void refresh() {
-        sharedPreferences.edit().remove("Monday tt").apply();
-        sharedPreferences.edit().remove("Tuesday tt").apply();
-        sharedPreferences.edit().remove("Wednesday tt").apply();
-        sharedPreferences.edit().remove("Thursday tt").apply();
-        sharedPreferences.edit().remove("Friday tt").apply();
-        sharedPreferences.edit().remove("Saturday tt").apply();
-        sharedPreferences.edit().remove("Time tt").apply();
+        sharedPreferences.edit().remove("Timetable monday").apply();
+        sharedPreferences.edit().remove("Timetable tuesday").apply();
+        sharedPreferences.edit().remove("Timetable wednesday").apply();
+        sharedPreferences.edit().remove("Timetable thursday").apply();
+        sharedPreferences.edit().remove("Timetable friday").apply();
+        sharedPreferences.edit().remove("Timetable saturday").apply();
+        sharedPreferences.edit().remove("Timetable time").apply();
+        sharedPreferences.edit().remove("Table download").apply();
         arr_time.removeAll(arr_time);
         arr_monday.removeAll(arr_monday);
         arr_tuesday.removeAll(arr_tuesday);
@@ -207,25 +209,17 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
                 String time_json = jo.getString("time");
                 arr_time.add(time_json);
             }
-
-            if(today_day.equals("Monday")){
-                arr_curDay = arr_monday;
+            try{
+                sharedPreferences.edit().putString("Timetable monday", ObjectSerializer.serialize(arr_monday)).apply();
+                sharedPreferences.edit().putString("Timetable tuesday", ObjectSerializer.serialize(arr_tuesday)).apply();
+                sharedPreferences.edit().putString("Timetable wednesday", ObjectSerializer.serialize(arr_wednesday)).apply();
+                sharedPreferences.edit().putString("Timetable thursday", ObjectSerializer.serialize(arr_thursday)).apply();
+                sharedPreferences.edit().putString("Timetable friday", ObjectSerializer.serialize(arr_friday)).apply();
+                sharedPreferences.edit().putString("Timetable saturday", ObjectSerializer.serialize(arr_saturday)).apply();
+                sharedPreferences.edit().putString("Timetable time", ObjectSerializer.serialize(arr_time)).apply();
             }
-            else if(today_day.equals("Tuesday")){
-                arr_curDay = arr_tuesday;
-            }
-            else if(today_day.equals("Wednesday")){
-                arr_curDay = arr_wednesday;
-            }
-            else if(today_day.equals("Thursday")){
-                arr_curDay = arr_thursday;
-            }else if(today_day.equals("Friday")){
-                arr_curDay = arr_thursday;
-            }
-            else if(today_day.equals("Saturday")){
-                arr_curDay = arr_friday;
-            }else{
-                arr_curDay = arr_monday;
+            catch (Exception e){
+                Toast.makeText(getActivity(), ""+e, Toast.LENGTH_SHORT).show();
             }
             setData();
         } catch (JSONException e) {
@@ -234,7 +228,47 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     }
 
     private void setData(){
-        refresh();
+        try {
+            sharedPreferences.edit().putString("Table download", "1").apply();
+            arr_time.removeAll(arr_time);
+            arr_monday.removeAll(arr_monday);
+            arr_tuesday.removeAll(arr_tuesday);
+            arr_wednesday.removeAll(arr_wednesday);
+            arr_thursday.removeAll(arr_thursday);
+            arr_friday.removeAll(arr_friday);
+            arr_saturday.removeAll(arr_saturday);
+            arr_curDay.removeAll(arr_curDay);
+            arr_monday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable monday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_tuesday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable tuesday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_wednesday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable wednesday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_thursday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable thursday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_friday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable friday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_saturday = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable saturday", ObjectSerializer.serialize(new ArrayList<String>())));
+            arr_time = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Timetable time", ObjectSerializer.serialize(new ArrayList<String>())));
+        } catch (Exception e) {
+            //refresh();
+        }
+
+        if(today_day.equals("Monday")){
+            arr_curDay = arr_monday;
+        }
+        else if(today_day.equals("Tuesday")){
+            arr_curDay = arr_tuesday;
+        }
+        else if(today_day.equals("Wednesday")){
+            arr_curDay = arr_wednesday;
+        }
+        else if(today_day.equals("Thursday")){
+            arr_curDay = arr_thursday;
+        }else if(today_day.equals("Friday")){
+            arr_curDay = arr_friday;
+        }
+        else if(today_day.equals("Saturday")){
+            arr_curDay = arr_saturday;
+        }else{
+            arr_curDay = arr_monday;
+        }
+        initRecyclerView();
 
     }
     private void initRecyclerView() {
@@ -515,5 +549,19 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     }
     @Override
     public void pullProgress(float pullDistance, float pullProgress) {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(sharedPreferences.contains("T branch"))
+        {
+            branch = sharedPreferences.getString("T branch", "");
+            section = sharedPreferences.getString("T section", "");
+            sem = sharedPreferences.getString("T sem", "");
+            setCurClass(getActivity(), branch, sem, section);
+            Toast.makeText(getActivity(), ""+branch + section + sem, Toast.LENGTH_LONG).show();
+            refresh();
+        }
     }
 }

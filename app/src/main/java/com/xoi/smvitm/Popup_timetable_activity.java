@@ -53,8 +53,9 @@ public class Popup_timetable_activity extends AppCompatActivity {
                 ssection = section_list[sectiont];
                 ssem = sem_list[semt];
                 sharedPreferences.edit().putString("T branch", sbranch).apply();
-                sharedPreferences.edit().putString("T sem", sbranch).apply();
-                sharedPreferences.edit().putString("T section", sbranch).apply();
+                sharedPreferences.edit().putString("T sem", ssem).apply();
+                sharedPreferences.edit().putString("T section", ssection).apply();
+                Timetable_fragment.n = 1;
                 finish();
             }
         });

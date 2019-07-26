@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("SMVITM");
                         break;
                     case R.id.timetable_nav:
-                        fragment = new Beta_timetable_fragment();
+                        fragment = new Timetable_fragment();
                         toolbar.setTitle("Timetable");
                         break;
                     case R.id.circular_nav:

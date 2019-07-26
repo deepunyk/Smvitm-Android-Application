@@ -103,7 +103,7 @@ public class Home_fragment extends Fragment {
         timetable_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new Beta_timetable_fragment();
+                Fragment fragment = new Timetable_fragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
