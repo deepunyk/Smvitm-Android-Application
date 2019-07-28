@@ -12,11 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.style.Circle;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Faculty_profile_activity extends AppCompatActivity {
 
     TextView name, branch, info, desig, email;
-    ImageView photo;
+    CircleImageView photo;
     SharedPreferences sharedPreferences;
     String fname, fbranch, finfo, fphoto, fdesig, femail;
     Toolbar toolbar;
@@ -30,7 +33,7 @@ public class Faculty_profile_activity extends AppCompatActivity {
         desig = (TextView)findViewById(R.id.Fdesig);
         email = (TextView)findViewById(R.id.Femail);
         info = (TextView)findViewById(R.id.Finfo);
-        photo = (ImageView) findViewById(R.id.Fphoto);
+        photo = (CircleImageView) findViewById(R.id.Fphoto);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back_icon));

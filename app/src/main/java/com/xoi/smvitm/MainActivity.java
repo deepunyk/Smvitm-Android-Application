@@ -22,9 +22,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jaeger.library.StatusBarUtil;
 import com.tomer.fadingtextview.FadingTextView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     String student_branch;
     long backPressedTime;
     public static NavigationView navigationView;
-    String profile;
+    String profile, photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
 
         profile = sharedPreferences.getString("login_Activity","");
-
-
 
         drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             String fac_desig, fac_branch;
+            photo = sharedPreferences.getString("Faculty photo","");
             fac_branch = sharedPreferences.getString("Faculty branch","");
             fac_desig = sharedPreferences.getString("Faculty desig","");
             String[] array_txt = {fac_desig, fac_branch};
