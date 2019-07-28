@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
 
-        profile = sharedPreferences.getString("Profile","");
+        profile = sharedPreferences.getString("login_Activity","");
 
 
 
@@ -65,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Timetable_fragment());
+        loadFragment(new Home_fragment());
 
         navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);
         header_name = (TextView)hView.findViewById(R.id.header_name);
         header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);
-        if(profile.equals("Student")) {
+        if(profile.equals("1")) {
             String student_name = sharedPreferences.getString("Student name", "");
             String student_sem = sharedPreferences.getString("Student sem","");
             student_branch = sharedPreferences.getString("Student branch", "");
@@ -84,8 +84,12 @@ public class MainActivity extends AppCompatActivity {
             header_branch.setTexts(array_txt);
         }
         else{
+            String fac_desig, fac_branch;
+            fac_branch = sharedPreferences.getString("Faculty branch","");
+            fac_desig = sharedPreferences.getString("Faculty desig","");
+            String[] array_txt = {fac_desig, fac_branch};
             header_name.setText(sharedPreferences.getString("Faculty name",""));
-            header_branch.setText(sharedPreferences.getString("Faculty branch",""));
+            header_branch.setTexts(array_txt);
         }
         toolbar.setTitle("SMVITM");
         navigationView.setCheckedItem(R.id.home_nav);
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void navigation_profile(View view){
-        if(profile.equals("Student")) {
+        if(profile.equals("1")) {
             Intent go = new Intent(MainActivity.this, User_profile_Activity.class);
             startActivity(go);
             finish();

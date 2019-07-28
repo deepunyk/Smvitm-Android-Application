@@ -48,7 +48,7 @@ public class faculty_recycler_view_adapter extends RecyclerView.Adapter<faculty_
         viewHolder.branch.setText(branches.get(i));
         viewHolder.mobile.setText(mobiles.get(i));
         viewHolder.email.setText(emails.get(i));
-        Glide.with(mContext).load(photolinks.get(i)).placeholder(R.drawable.user_profile_icon).error(R.drawable.college_logo).into(viewHolder.imgFaculty);
+        Glide.with(mContext).load(photolinks.get(i)).placeholder(R.drawable.college_logo).error(R.drawable.college_logo).into(viewHolder.imgFaculty);
     }
 
     @Override

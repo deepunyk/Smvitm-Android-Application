@@ -28,7 +28,7 @@ import com.jaeger.library.StatusBarUtil;
 
 
 public class login_Activity extends AppCompatActivity {
-    private Button sign;
+    private Button sign, faculty_sign;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
@@ -40,7 +40,28 @@ public class login_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sign = (Button)findViewById(R.id.sign);
+        faculty_sign = (Button)findViewById(R.id.faculty_sign);
         loading = (SpinKitView)findViewById(R.id.spin_kit);
+
+        faculty_sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                faculty_sign.setAlpha(0.7f);
+                faculty_sign.setBackgroundColor(getResources().getColor(R.color.silver));
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        faculty_sign.setAlpha(1f);
+                        faculty_sign.setBackgroundColor(getResources().getColor(R.color.white));
+                    }
+                }, 50 );
+                Intent i = new Intent(login_Activity.this, login_faculty.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()

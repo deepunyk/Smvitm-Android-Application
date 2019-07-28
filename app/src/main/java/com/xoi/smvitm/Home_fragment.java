@@ -1,6 +1,7 @@
 package com.xoi.smvitm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,18 +66,20 @@ public class Home_fragment extends Fragment {
             img_urls = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel link", ObjectSerializer.serialize(new ArrayList<String>())));
             car_head = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel head", ObjectSerializer.serialize(new ArrayList<String>())));
             car_sub = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Main carousel sub", ObjectSerializer.serialize(new ArrayList<String>())));
+
+            toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            carHead = (TextView)view.findViewById(R.id.carHead);
+            carSub = (TextView)view.findViewById(R.id.carSub);
+            carouselView = view.findViewById(R.id.carouselView);
+            carouselView.setPageCount(img_urls.size());
+            carouselView.setImageListener(imageListener);
+            carHead.setText(car_head.get(0));
+            carSub.setText(car_sub.get(0));
         } catch (Exception e) {
-
+            Intent i = new Intent(getActivity(),splash_Activiy.class);
+            startActivity(i);
+            getActivity().finish();
         }
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        carHead = (TextView)view.findViewById(R.id.carHead);
-        carSub = (TextView)view.findViewById(R.id.carSub);
-        carouselView = view.findViewById(R.id.carouselView);
-        carouselView.setPageCount(img_urls.size());
-        carouselView.setImageListener(imageListener);
-        carHead.setText(car_head.get(0));
-        carSub.setText(car_sub.get(0));
-
         carouselView.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -151,7 +154,14 @@ public class Home_fragment extends Fragment {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            Glide.with(getContext()).load(img_urls.get(position)).placeholder(R.drawable.loading_carousel).into(imageView);
+            try {
+                Glide.with(getContext()).load(img_urls.get(position)).placeholder(R.drawable.loading_carousel).into(imageView);
+            }
+            catch (Exception e){
+                Intent i = new Intent(getActivity(),splash_Activiy.class);
+                startActivity(i);
+                getActivity().finish();
+            }
         }
     };
 

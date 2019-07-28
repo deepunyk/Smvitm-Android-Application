@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bk"
-    android:gravity="center"
     android:fitsSystemWindows="true"
+    android:gravity="center"
     tools:context=".login_Activity">
 
     <ImageView
@@ -39,6 +39,7 @@
         style="@style/SpinKitView.Small.WanderingCubes"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:paddingBottom="10dp"
@@ -46,29 +47,30 @@
         app:SpinKit_Color="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline56" />
 
 
     <com.shaishavgandhi.loginbuttons.GoogleButton
         android:id="@+id/sign"
         android:layout_width="wrap_content"
-        android:textAlignment="center"
-        app:iconSize="30dp"
-        app:roundedCornerRadius="10dp"
-        android:textColor="#7c137c"
-        app:iconCenterAligned="false"
-        android:text="  Sign in with google    "
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:text="  Student login    "
+        android:textAlignment="center"
+        android:textColor="#7c137c"
+        app:iconCenterAligned="false"
+        app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:roundedCornerRadius="10dp" />
 
 
     <TextView
+        android:id="@+id/textView21"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -80,6 +82,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign" />
+
+    <Button
+        android:id="@+id/faculty_sign"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:text="Faculty Login"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/guideline56"
+        app:layout_constraintEnd_toEndOf="@+id/sign"
+        app:layout_constraintStart_toStartOf="@+id/sign" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.86" />
 
 
 </android.support.constraint.ConstraintLayout>

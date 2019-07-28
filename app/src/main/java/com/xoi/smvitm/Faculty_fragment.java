@@ -56,6 +56,7 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
     String[] branch_list = {"Basic Science", "Computer Science", "Electronics" , "Mechanical", "Civil"};
     SharedPreferences sharedPreferences;
     String student_branch;
+    String profile;
 
     @Nullable
     @Override
@@ -65,7 +66,31 @@ public class Faculty_fragment extends Fragment implements IRefreshStatus {
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        student_branch = sharedPreferences.getString("Student branch", "");
+
+        profile = sharedPreferences.getString("login_Activity","");
+
+        if(profile.equals("1")) {
+            student_branch = sharedPreferences.getString("Student branch", "");
+        }
+        else{
+            String branch = sharedPreferences.getString("Faculty branch", "");
+            if(branch.equals("Computer Science")){
+                branch = "Computer Science";
+            }
+            else if(branch.equals("Electronics & Communication Engineering")){
+                branch = "Electronics";
+            }
+            else if(branch.equals("Mechanical Engineering")){
+                branch = "Mechanical";
+            }
+            else if(branch.equals("Physics")||branch.equals("Mathematics")||branch.equals("Chemistry")){
+                branch = "Basic Science";
+            }
+            else{
+                branch = "Civil";
+            }
+            student_branch = branch;
+        }
 
         url = basic_url;
 

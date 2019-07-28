@@ -76,6 +76,7 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     public static int n = 0;
     int prevPos;
     int weekDay = 1;
+    String profile;
 
     @Nullable
     @Override
@@ -85,9 +86,32 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
         view = inflater.inflate(R.layout.fragment_timebtable, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        section = sharedPreferences.getString("Student section", "A");
-        branch = sharedPreferences.getString("Student branch", "Computer Science");
-        sem = sharedPreferences.getString("Student sem", "A");
+        profile = sharedPreferences.getString("login_Activity","");
+        if(profile.equals("1")) {
+            section = sharedPreferences.getString("Student section", "A");
+            branch = sharedPreferences.getString("Student branch", "Computer Science");
+            sem = sharedPreferences.getString("Student sem", "1");
+        }
+        else{
+            section = "A";
+            branch = sharedPreferences.getString("Faculty branch", "Computer Science");
+            sem = "1";
+            if(branch.equals("Computer Science")){
+                branch = "Computer Science";
+            }
+            else if(branch.equals("Electronics & Communication Engineering")){
+                branch = "Electronics";
+            }
+            else if(branch.equals("Mechanical Engineering")){
+                branch = "Mechanical";
+            }
+            else if(branch.equals("Physics")||branch.equals("Mathematics")||branch.equals("Chemistry")){
+                branch = "Computer Science";
+            }
+            else{
+                branch = "Civil";
+            }
+        }
         sharedPreferences.edit().remove("T section").apply();
         sharedPreferences.edit().remove("T branch").apply();
         sharedPreferences.edit().remove("T sem").apply();
@@ -560,7 +584,6 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
             section = sharedPreferences.getString("T section", "");
             sem = sharedPreferences.getString("T sem", "");
             setCurClass(getActivity(), branch, sem, section);
-            Toast.makeText(getActivity(), ""+branch + section + sem, Toast.LENGTH_LONG).show();
             refresh();
         }
     }
