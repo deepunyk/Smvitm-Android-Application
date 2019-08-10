@@ -85,6 +85,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
             @Override
             public void onNavigationChanged(View view, int position) {
                 switch (position) {
+
                     case 0:
                         url = wUrl;
                         refresh();

@@ -53,7 +53,7 @@ public class Home_fragment extends Fragment {
     private ArrayList<String> car_head = new ArrayList<>();
     private ArrayList<String> car_sub = new ArrayList<>();
     SharedPreferences sharedPreferences;
-    CardView timetable_home, event_home, circular_home, more_home;
+    CardView timetable_home, event_home, circular_home, attendance_home;
     TextView carHead,carSub;
     Toolbar toolbar;
 
@@ -101,7 +101,7 @@ public class Home_fragment extends Fragment {
         timetable_home = (CardView)view.findViewById(R.id.timetable_home);
         circular_home = (CardView)view.findViewById(R.id.circular_home);
         event_home = (CardView)view.findViewById(R.id.event_home);
-        more_home = (CardView)view.findViewById(R.id.more_home);
+        attendance_home = (CardView)view.findViewById(R.id.attendance_home);
 
         timetable_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,10 +142,17 @@ public class Home_fragment extends Fragment {
                 toolbar.setTitle("Events");
             }
         });
-        more_home.setOnClickListener(new View.OnClickListener() {
+        attendance_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Additional features coming soon.", Toast.LENGTH_SHORT).show();
+                Fragment fragment = new Attendance_fragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                MainActivity.navigationView.setCheckedItem(R.id.calendar_nav);
+                toolbar.setTitle("Academic Calendar");
             }
         });
         return view;

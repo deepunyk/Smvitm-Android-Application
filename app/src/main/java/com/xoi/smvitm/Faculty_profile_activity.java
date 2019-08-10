@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class Faculty_profile_activity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String fname, fbranch, finfo, fphoto, fdesig, femail;
     Toolbar toolbar;
+    Button pass_but;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class Faculty_profile_activity extends AppCompatActivity {
         info = (TextView)findViewById(R.id.Finfo);
         photo = (CircleImageView) findViewById(R.id.Fphoto);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        pass_but = (Button)findViewById(R.id.password_but);
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back_icon));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,14 @@ public class Faculty_profile_activity extends AppCompatActivity {
         Glide.with(Faculty_profile_activity.this).load(fphoto).placeholder(R.drawable.user_profile_icon).error(R.drawable.college_logo).into(photo);
 
 
+        pass_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Faculty_profile_activity.this,Faculty_passsword_change.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void onBackPressed() {

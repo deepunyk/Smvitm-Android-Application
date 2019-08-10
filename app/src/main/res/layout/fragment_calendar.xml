@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bk">
+
+    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+        android:id="@+id/bubble_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:padding="12dp"
+        app:bnc_mode="spread"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="true"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_icon="@drawable/ic_calendar"
+            app:bt_title="AUG"
+            app:bt_titleSize="13sp" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_icon="@drawable/ic_calendar"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title="SEPT"
+            app:bt_titleSize="13sp" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_icon="@drawable/ic_calendar"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title="OCT"
+            app:bt_titleSize="13sp" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_rest1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_icon="@drawable/ic_calendar"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title="NOV"
+            app:bt_titleSize="13sp" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_rest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_icon="@drawable/ic_calendar"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title="DEC"
+            app:bt_titleSize="13sp" />
+
+    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+
+    <com.dinuscxj.refresh.RecyclerRefreshLayout
+        android:id="@+id/main_swipe"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubble_nav_view"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+
+</android.support.constraint.ConstraintLayout>

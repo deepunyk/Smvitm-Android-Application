@@ -68,6 +68,7 @@ public class login_Activity extends AppCompatActivity {
                 .build();
 
         sharedPreferences = getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("Third time","1").apply();
 
         StatusBarUtil.setTransparent(login_Activity.this);
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);

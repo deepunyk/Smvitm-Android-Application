@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Home_fragment());
+        loadFragment(new Calendar_fragment());
 
         navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);
@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new Home_fragment();
                         toolbar.setTitle("SMVITM");
                         break;
+                    case R.id.attendance_nav:
+                        fragment = new Attendance_fragment();
+                        toolbar.setTitle("Attendance");
+                        break;
                     case R.id.timetable_nav:
                         fragment = new Timetable_fragment();
                         toolbar.setTitle("Timetable");
@@ -121,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.events_nav:
                         fragment = new Event_fragment();
                         toolbar.setTitle("Events");
+                        break;
+                    case R.id.calendar_nav:
+                        fragment = new Calendar_fragment();
+                        toolbar.setTitle("Academic Calendar");
                         break;
                     case R.id.sign_out_nav:
                         SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);

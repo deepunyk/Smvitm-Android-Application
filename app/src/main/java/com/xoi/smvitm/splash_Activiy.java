@@ -56,6 +56,9 @@ public class splash_Activiy extends AppCompatActivity {
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
 
+        if(!sharedPreferences.contains("Third time")){
+            sharedPreferences.edit().clear().apply();
+        }
 
         if (internet) {
             sharedPreferences.edit().putString("Internet Connection", "Yes").apply();

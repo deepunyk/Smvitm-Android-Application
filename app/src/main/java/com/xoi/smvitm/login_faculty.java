@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -158,5 +159,12 @@ public class login_faculty extends AppCompatActivity {
         stringRequest.setRetryPolicy(retryPolicy);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(login_faculty.this,login_Activity.class);
+        startActivity(i);
+        finish();
     }
 }
