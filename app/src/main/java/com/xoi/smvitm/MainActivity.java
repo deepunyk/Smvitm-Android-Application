@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new Calendar_fragment());
+        loadFragment(new Home_fragment());
 
         navigationView = (NavigationView) findViewById(R.id.navView);
         View hView =  navigationView.getHeaderView(0);

@@ -120,7 +120,8 @@ public class User_profile_Activity extends AppCompatActivity {
                             finish();
                             overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
                         }
-                        else { student_name = response.substring(0, response.indexOf(","));
+                        else {
+                            student_name = response.substring(0, response.indexOf(","));
                             response = response.substring(response.indexOf(",") + 1, response.length());
                             student_sem = response.substring(0, response.indexOf(","));
                             response = response.substring(response.indexOf(",") + 1, response.length());

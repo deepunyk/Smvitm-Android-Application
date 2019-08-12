@@ -24,4 +24,5 @@
     <color name="navy">#000080</color>
     <color name= "light_black">#424242</color>
     <color name="black">#000000</color>
+    <color name="medium_black">#1d1e22</color>
 </resources>
