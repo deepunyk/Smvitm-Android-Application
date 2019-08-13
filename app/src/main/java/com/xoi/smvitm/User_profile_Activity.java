@@ -108,7 +108,6 @@ public class User_profile_Activity extends AppCompatActivity {
 
         loading = ProgressDialog.show(this,"Fetching student details","Please wait");
         final String studName = student_usn;
-        Toast.makeText(this, ""+studName, Toast.LENGTH_SHORT).show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxIVco5JVe3XJhe0JNEl1zPSCJO-2FFYT6YE1FW8d58VSUUCV8/exec",
         new Response.Listener<String>() {

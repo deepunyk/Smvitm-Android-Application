@@ -79,6 +79,7 @@ public class Faculty_profile_activity extends AppCompatActivity {
                 Intent i = new Intent(Faculty_profile_activity.this,Faculty_passsword_change.class);
                 startActivity(i);
                 finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             }
         });
     }

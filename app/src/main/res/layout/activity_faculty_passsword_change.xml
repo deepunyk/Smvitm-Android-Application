@@ -7,25 +7,28 @@
     android:background="@drawable/main_bk"
     tools:context=".Faculty_passsword_change">
 
+
     <EditText
         android:id="@+id/pass_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
-        android:hint="New password"
+        android:gravity="center"
         android:inputType="textPassword"
         android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline61"
-        app:layout_constraintTop_toTopOf="@+id/guideline47" />
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline61"
@@ -45,32 +48,136 @@
         android:id="@+id/confirm_pass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@color/white"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
-        android:hint="Confirm password"
+        android:gravity="center"
         android:inputType="textPassword"
         android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline62"
         app:layout_constraintStart_toStartOf="@+id/guideline61"
-        app:layout_constraintTop_toBottomOf="@+id/pass_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
-    <Button
+    <com.dd.processbutton.iml.ActionProcessButton
         android:id="@+id/change_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/round_edittext"
+        android:text="Change password"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline61"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_pass"
+        app:pb_colorComplete="@color/white"
+        app:pb_colorError="@color/red"
+        app:pb_colorNormal="@color/white"
+        app:pb_colorPressed="@color/white"
+        app:pb_colorProgress="@color/white"
+        app:pb_textComplete="Done"
+        app:pb_textError="Error"
+        app:pb_textProgress="Applying changes" />
+
+    <TextView
+        android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Change password"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Reset Password"
+        android:textColor="@color/light_black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline62"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/guideline61"
-        app:layout_constraintTop_toTopOf="@+id/guideline63" />
+        app:layout_constraintTop_toTopOf="@+id/guideline67" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline67"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="Enter your new password below, we are just being extra safe"
+        app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline61"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="New Password"
+        app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline61"
+        app:layout_constraintTop_toTopOf="@+id/guideline47" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="Confirm Password"
+        app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline61"
+        app:layout_constraintTop_toBottomOf="@+id/pass_edit" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleX="-1"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/imageView13"
+        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        app:layout_constraintTop_toTopOf="@+id/imageView13"
+        app:srcCompat="@drawable/ic_faculty_pass" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline68"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline61"
+        app:layout_constraintTop_toTopOf="@+id/guideline63"
+        app:srcCompat="@drawable/key_circle" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline63"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.07" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline68"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.21" />
+
 </android.support.constraint.ConstraintLayout>

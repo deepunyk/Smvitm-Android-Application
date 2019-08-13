@@ -125,6 +125,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
                         parseItems(response);
                     }
                 },
@@ -132,7 +133,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        refreshComplete();
                     }
                 }
         );
@@ -165,10 +166,19 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 String brochure_json = jo.getString("brochure");
                 brochures.add(brochure_json);
             }
-            initRecyclerView();
+            if(descriptions.get(0).equals("-")){
+                noData();
+            }else {
+                initRecyclerView();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void noData(){
+        load_an.setVisibility(View.GONE);
+        load_txt.setText("No events found");
     }
 
     private void initRecyclerView() {
@@ -189,6 +199,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     public void refreshing() {
         loader.setTitle("Updating events");
         loader.setMessage("Please wait...");
+        load_txt.setText("Collecting events");
         loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loader.setCancelable(false);
         //loader.show();

@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/asap_medium"
-            android:text="TextView"
             android:textColor="@color/light_black"
             android:textSize="18sp" />
     </android.support.v7.widget.CardView>

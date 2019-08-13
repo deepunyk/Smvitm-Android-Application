@@ -56,7 +56,7 @@
             android:id="@+id/item3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:bt_active="true"
+            app:bt_active="false"
             app:bt_colorActive="@color/colorPrimary"
             app:bt_colorInactive="@color/light_black"
             app:bt_shape="@drawable/events_transition"

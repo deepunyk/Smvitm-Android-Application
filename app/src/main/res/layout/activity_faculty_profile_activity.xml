@@ -232,14 +232,15 @@
 
     <Button
         android:id="@+id/password_but"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingLeft="10dp"
         android:paddingEnd="10dp"
         android:text="Change password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
         app:layout_constraintTop_toTopOf="@+id/guideline30" />
 
 </android.support.constraint.ConstraintLayout>

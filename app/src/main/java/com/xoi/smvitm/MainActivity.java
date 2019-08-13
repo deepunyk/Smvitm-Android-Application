@@ -107,8 +107,13 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("SMVITM");
                         break;
                     case R.id.attendance_nav:
-                        fragment = new Attendance_fragment();
-                        toolbar.setTitle("Attendance");
+                        if(profile.equals("1")) {
+                            fragment = new Attendance_fragment();
+                            toolbar.setTitle("Attendance");
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "his feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.timetable_nav:
                         fragment = new Timetable_fragment();

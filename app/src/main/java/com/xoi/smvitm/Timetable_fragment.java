@@ -307,7 +307,6 @@ public class Timetable_fragment extends Fragment implements IRefreshStatus {
     private void getDay() {
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
         if (Calendar.MONDAY == dayOfWeek) {
             weekDay = 1;
         } else if (Calendar.TUESDAY == dayOfWeek) {

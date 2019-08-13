@@ -12,18 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Faculty_passsword_change"></activity>
+        <activity android:name=".Faculty_passsword_change"/>
         <activity android:name=".login_faculty" />
         <activity android:name=".Timetable_new" />
         <activity android:name=".login_Activity" />
         <activity android:name=".Popup_timetable_activity" />
         <activity android:name=".Event_popup_activity" />
-        <activity android:name=".splash_Activiy" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".User_profile_Activity" />
         <activity android:name=".Edit_Existing_User_Profile_Activity" />
         <activity android:name=".Edit_New_User_Profile_Activity" />
         <activity android:name=".Faculty_profile_activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".splash_Activiy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

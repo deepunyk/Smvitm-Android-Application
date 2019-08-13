@@ -32,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -56,6 +57,7 @@ public class Home_fragment extends Fragment {
     CardView timetable_home, event_home, circular_home, attendance_home;
     TextView carHead,carSub;
     Toolbar toolbar;
+    String profile;
 
     @Nullable
     @Override
@@ -80,6 +82,8 @@ public class Home_fragment extends Fragment {
             startActivity(i);
             getActivity().finish();
         }
+
+        profile = sharedPreferences.getString("login_Activity","");
         carouselView.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -145,14 +149,20 @@ public class Home_fragment extends Fragment {
         attendance_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new Attendance_fragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.contentContainer, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                MainActivity.navigationView.setCheckedItem(R.id.calendar_nav);
-                toolbar.setTitle("Academic Calendar");
+                if(profile.equals("1")) {
+                    Fragment fragment = new Attendance_fragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.contentContainer, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    MainActivity.navigationView.setCheckedItem(R.id.calendar_nav);
+                    toolbar.setTitle("Academic Calendar");
+                }
+                else{
+                    Toast.makeText(getActivity(), "This feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         return view;
