@@ -112,12 +112,16 @@ public class MainActivity extends AppCompatActivity {
                             toolbar.setTitle("Attendance");
                         }
                         else{
-                            Toast.makeText(MainActivity.this, "his feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "This feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.timetable_nav:
                         fragment = new Timetable_fragment();
                         toolbar.setTitle("Timetable");
+                        break;
+                    case R.id.feedback_nav:
+                        fragment = new Feedback_fragment();
+                        toolbar.setTitle("Feedback");
                         break;
                     case R.id.circular_nav:
                         fragment = new Circular_fragment();

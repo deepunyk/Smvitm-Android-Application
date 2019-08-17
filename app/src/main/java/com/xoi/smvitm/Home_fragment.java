@@ -156,8 +156,8 @@ public class Home_fragment extends Fragment {
                     fragmentTransaction.replace(R.id.contentContainer, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    MainActivity.navigationView.setCheckedItem(R.id.calendar_nav);
-                    toolbar.setTitle("Academic Calendar");
+                    MainActivity.navigationView.setCheckedItem(R.id.attendance_nav);
+                    toolbar.setTitle("Attendance");
                 }
                 else{
                     Toast.makeText(getActivity(), "This feature is currently not available for faculties", Toast.LENGTH_SHORT).show();

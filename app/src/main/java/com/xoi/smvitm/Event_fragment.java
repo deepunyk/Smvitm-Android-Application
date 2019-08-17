@@ -53,11 +53,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     Button refresh;
     RecyclerRefreshLayout refreshLayout;
     RecyclerView recyclerView;
-    String url = "https://script.google.com/macros/s/AKfycbxmtou-2wG8wZA8JZlaCgcW_Ky4baECBIpQYX39PsOx30SWOyc/exec?action=";
-    String wUrl = url + "getWorkshop";
-    String pUrl = url + "getProgram";
-    String cUrl = url + "getCompetition";
-    BubbleNavigationConstraintView bubbleToggleView;
+    String url = "https://script.google.com/macros/s/AKfycbxmtou-2wG8wZA8JZlaCgcW_Ky4baECBIpQYX39PsOx30SWOyc/exec?action=getEvents";
     SpinKitView load_an;
     TextView load_txt;
 
@@ -67,9 +63,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
         view = inflater.inflate(R.layout.fragment_event, container, false);
         refreshLayout = (RecyclerRefreshLayout) view.findViewById(R.id.main_swipe);
         loader = new ProgressDialog(getActivity());
-        bubbleToggleView = (BubbleNavigationConstraintView) view.findViewById(R.id.bubble_nav_view);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
-        url = wUrl;
         load_an = (SpinKitView)view.findViewById(R.id.spin_kit);
         load_txt = (TextView)view.findViewById(R.id.load_txt);
         refresh();
@@ -80,30 +74,6 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 refresh();
             }
         });
-
-        bubbleToggleView.setNavigationChangeListener(new BubbleNavigationChangeListener() {
-            @Override
-            public void onNavigationChanged(View view, int position) {
-                switch (position) {
-
-                    case 0:
-                        url = wUrl;
-                        refresh();
-                        break;
-                    case 1:
-                        url = cUrl;
-                        refresh();
-                        break;
-                    case 2:
-                        url = pUrl;
-                        refresh();
-                        break;
-                    default:
-                        url = wUrl;
-                }
-            }
-        });
-
 
         return view;
     }
@@ -125,7 +95,6 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
                         parseItems(response);
                     }
                 },
@@ -166,7 +135,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 String brochure_json = jo.getString("brochure");
                 brochures.add(brochure_json);
             }
-            if(descriptions.get(0).equals("-")){
+            if(titles.get(0).equals("-")){
                 noData();
             }else {
                 initRecyclerView();

@@ -149,7 +149,7 @@ public class login_Activity extends AppCompatActivity {
                         });
             }
             else {
-                Toast.makeText(this, "This app is student version. We will be giving access to faculties in the coming updates", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Please use sode-edu account", Toast.LENGTH_LONG).show();
             }
 
         }

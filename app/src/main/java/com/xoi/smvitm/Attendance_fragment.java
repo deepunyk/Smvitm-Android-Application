@@ -78,6 +78,7 @@ public class Attendance_fragment extends Fragment implements IRefreshStatus {
                 initRecyclerView();
             } catch (Exception e) {
                 refresh();
+
             }
         }
         else{
@@ -109,11 +110,25 @@ public class Attendance_fragment extends Fragment implements IRefreshStatus {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String response_original = response;
-                        while (true){
-                            if(response.substring(0,1).equals("!")){
-                                break;
+                        if(response.equals("No user found")){
+                            last_up_txt.setText("Attendance details will be available soon");
+                            refreshComplete();
+                        }
+                        else {
+                            String response_original = response;
+                            while (true) {
+                                if (response.substring(0, 1).equals("!")) {
+                                    break;
+                                }
+                                subjects.add(response.substring(0, response.indexOf(",")));
+                                response = response.substring(response.indexOf(",") + 1, response.length());
+                                class_attend.add(response.substring(0, response.indexOf(",")));
+                                response = response.substring(response.indexOf(",") + 1, response.length());
+                                response = response.substring(response.indexOf(",") + 1, response.length());
+                                class_total.add(response.substring(0, response.indexOf(",")));
+                                response = response.substring(response.indexOf(",") + 1, response.length());
                             }
+                            response = response.substring(response.indexOf(",") + 1, response.length());
                             subjects.add(response.substring(0, response.indexOf(",")));
                             response = response.substring(response.indexOf(",") + 1, response.length());
                             class_attend.add(response.substring(0, response.indexOf(",")));
@@ -121,27 +136,18 @@ public class Attendance_fragment extends Fragment implements IRefreshStatus {
                             response = response.substring(response.indexOf(",") + 1, response.length());
                             class_total.add(response.substring(0, response.indexOf(",")));
                             response = response.substring(response.indexOf(",") + 1, response.length());
+                            last_up = response;
+                            refreshComplete();
+                            try {
+                                sharedPreferences.edit().putString("Attendance subject", ObjectSerializer.serialize(subjects)).apply();
+                                sharedPreferences.edit().putString("Attendance class attend", ObjectSerializer.serialize(class_attend)).apply();
+                                sharedPreferences.edit().putString("Attendance class total", ObjectSerializer.serialize(class_total)).apply();
+                                sharedPreferences.edit().putString("Attendance details", ObjectSerializer.serialize(class_total)).apply();
+                                sharedPreferences.edit().putString("Attendance last updated", last_up).apply();
+                            } catch (Exception e) {
+                            }
+                            initRecyclerView();
                         }
-                        response = response.substring(response.indexOf(",") + 1, response.length());
-                        subjects.add(response.substring(0, response.indexOf(",")));
-                        response = response.substring(response.indexOf(",") + 1, response.length());
-                        class_attend.add(response.substring(0, response.indexOf(",")));
-                        response = response.substring(response.indexOf(",") + 1, response.length());
-                        response = response.substring(response.indexOf(",") + 1, response.length());
-                        class_total.add(response.substring(0, response.indexOf(",")));
-                        response = response.substring(response.indexOf(",") + 1, response.length());
-                        last_up = response;
-                        refreshComplete();
-                        try {
-                            sharedPreferences.edit().putString("Attendance subject", ObjectSerializer.serialize(subjects)).apply();
-                            sharedPreferences.edit().putString("Attendance class attend", ObjectSerializer.serialize(class_attend)).apply();
-                            sharedPreferences.edit().putString("Attendance class total", ObjectSerializer.serialize(class_total)).apply();
-                            sharedPreferences.edit().putString("Attendance details", ObjectSerializer.serialize(class_total)).apply();
-                            sharedPreferences.edit().putString("Attendance last updated", last_up).apply();
-                        }
-                        catch (Exception e) {
-                        }
-                        initRecyclerView();
                     }
                 },
                 new Response.ErrorListener() {

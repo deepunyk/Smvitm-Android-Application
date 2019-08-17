@@ -66,6 +66,9 @@ public class event_recycler_view_adapter extends RecyclerView.Adapter<event_recy
                 mContext.startActivity(go);
             }
         });
+        if(descriptions.get(i).equals("-")){
+            viewHolder.description.setVisibility(View.GONE);
+        }
     }
 
     @Override
