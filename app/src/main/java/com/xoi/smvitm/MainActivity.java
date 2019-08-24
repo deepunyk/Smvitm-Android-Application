@@ -139,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new Calendar_fragment();
                         toolbar.setTitle("Academic Calendar");
                         break;
+                    case R.id.exam_nav:
+                        fragment = new Exam_fragment();
+                        toolbar.setTitle("Exam Details");
+                        break;
                     case R.id.sign_out_nav:
                         SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
                         sharedPreferences.edit().clear().apply();
