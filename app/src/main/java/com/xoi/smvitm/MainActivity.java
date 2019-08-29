@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sharedPreferences = getSharedPreferences("com.xoi.smvitm",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.xoi.smvitm", MODE_PRIVATE);
 
-        profile = sharedPreferences.getString("login_Activity","");
+        profile = sharedPreferences.getString("login_Activity", "");
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.nav_drawer);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
+        drawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -69,28 +69,27 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new Home_fragment());
 
         navigationView = (NavigationView) findViewById(R.id.navView);
-        View hView =  navigationView.getHeaderView(0);
-        header_name = (TextView)hView.findViewById(R.id.header_name);
+        View hView = navigationView.getHeaderView(0);
+        header_name = (TextView) hView.findViewById(R.id.header_name);
         header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);
-        if(profile.equals("1")) {
+        if (profile.equals("1")) {
             String student_name = sharedPreferences.getString("Student name", "");
-            String student_sem = sharedPreferences.getString("Student sem","");
+            String student_sem = sharedPreferences.getString("Student sem", "");
             student_branch = sharedPreferences.getString("Student branch", "");
-            String student_section = sharedPreferences.getString("Student section","");
+            String student_section = sharedPreferences.getString("Student section", "");
             student_sem = student_sem + " " + student_section;
             String student_usn = sharedPreferences.getString("Student usn", "");
-            String[] array_txt = {student_branch, student_sem,student_usn};
+            String[] array_txt = {student_branch, student_sem, student_usn};
 
             header_name.setText(student_name);
             header_branch.setTexts(array_txt);
-        }
-        else{
+        } else {
             String fac_desig, fac_branch;
-            photo = sharedPreferences.getString("Faculty photo","");
-            fac_branch = sharedPreferences.getString("Faculty branch","");
-            fac_desig = sharedPreferences.getString("Faculty desig","");
+            photo = sharedPreferences.getString("Faculty photo", "");
+            fac_branch = sharedPreferences.getString("Faculty branch", "");
+            fac_desig = sharedPreferences.getString("Faculty desig", "");
             String[] array_txt = {fac_desig, fac_branch};
-            header_name.setText(sharedPreferences.getString("Faculty name",""));
+            header_name.setText(sharedPreferences.getString("Faculty name", ""));
             header_branch.setTexts(array_txt);
         }
         toolbar.setTitle("SMVITM");
@@ -101,17 +100,16 @@ public class MainActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
                 Fragment fragment = null;
                 menuItem.setChecked(true);
-                switch (id){
+                switch (id) {
                     case R.id.home_nav:
                         fragment = new Home_fragment();
                         toolbar.setTitle("SMVITM");
                         break;
                     case R.id.attendance_nav:
-                        if(profile.equals("1")) {
+                        if (profile.equals("1")) {
                             fragment = new Attendance_fragment();
                             toolbar.setTitle("Attendance");
-                        }
-                        else{
+                        } else {
                             Toast.makeText(MainActivity.this, "This feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
                         }
                         break;
@@ -140,7 +138,11 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("Academic Calendar");
                         break;
                     case R.id.exam_nav:
-                        fragment = new Exam_fragment();
+                        if (profile.equals("1")) {
+                            fragment = new Exam_fragment();
+                        } else {
+                            fragment = new Exam_Faculty_fragment();
+                        }
                         toolbar.setTitle("Exam Details");
                         break;
                     case R.id.sign_out_nav:
@@ -160,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     @Override

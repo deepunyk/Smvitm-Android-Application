@@ -1,19 +1,33 @@
 package com.xoi.smvitm;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class exam_rv_adapter extends RecyclerView.Adapter<exam_rv_adapter.ViewHolder>{
 
@@ -40,11 +54,17 @@ public class exam_rv_adapter extends RecyclerView.Adapter<exam_rv_adapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull exam_rv_adapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final exam_rv_adapter.ViewHolder viewHolder, final int i) {
 
         viewHolder.name_txt.setText(name.get(i));
         viewHolder.time_txt.setText(time.get(i));
         viewHolder.date_txt.setText(date.get(i));
+        viewHolder.parent_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
         if(portion.get(i).equals("-")){
             viewHolder.portion_def.setVisibility(View.GONE);
             viewHolder.portion.setVisibility(View.GONE);
@@ -80,4 +100,5 @@ public class exam_rv_adapter extends RecyclerView.Adapter<exam_rv_adapter.ViewHo
             underline = itemView.findViewById(R.id.view2);
         }
     }
+
 }

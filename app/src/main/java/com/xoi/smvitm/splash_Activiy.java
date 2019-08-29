@@ -1,21 +1,28 @@
 package com.xoi.smvitm;
 
+import android.Manifest;
 import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,6 +39,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 
 public class splash_Activiy extends AppCompatActivity {
     String login;
@@ -41,12 +50,12 @@ public class splash_Activiy extends AppCompatActivity {
     private ArrayList<String> img_urls = new ArrayList<>();
     private ArrayList<String> car_head = new ArrayList<>();
     private ArrayList<String> car_sub = new ArrayList<>();
+    private int STORAGE_PERMISSION_CODE = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
 
         internet = checkInternetConnection();
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
@@ -56,28 +65,34 @@ public class splash_Activiy extends AppCompatActivity {
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
 
-        if(!sharedPreferences.contains("Third time")){
-            sharedPreferences.edit().clear().apply();
-        }
+        if(isReadStorageAllowed()){
+            if (internet) {
+                sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
+                try{
+                    getImages();
+                }
+                catch (Exception e){
+                    Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
 
-        if (internet) {
-            sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
-            getImages();
-        } else {
-            new AlertDialog.Builder(splash_Activiy.this)
-                    .setTitle("No internet connection")
-                    .setMessage("This app requires internet connection. Please switch on your internet and try again.")
-                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                            System.exit(0);
-                        }
-                    })
-                    .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
-                    .show();
+                }
+            } else {
+                new AlertDialog.Builder(splash_Activiy.this)
+                        .setTitle("No internet connection")
+                        .setMessage("This app requires internet connection. Please switch on your internet and try again.")
+                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                                System.exit(0);
+                            }
+                        })
+                        .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
+                        .show();
+            }
         }
-
+        else {
+            requestStoragePermission();
+        }
     }
 
     private boolean checkInternetConnection() {
@@ -149,4 +164,51 @@ public class splash_Activiy extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //Requesting permission
+    private void requestStoragePermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+
+        }
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == STORAGE_PERMISSION_CODE){
+
+            if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (internet) {
+                    sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
+                    getImages();
+                } else {
+                    new AlertDialog.Builder(splash_Activiy.this)
+                            .setTitle("No internet connection")
+                            .setMessage("This app requires internet connection. Please switch on your internet and try again.")
+                            .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                    System.exit(0);
+                                }
+                            })
+                            .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
+                            .show();
+                }
+            }else{
+                Toast.makeText(this,"Oops you just denied the permission, for the app to run please allow the app to access the storage",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private boolean isReadStorageAllowed() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (result == PackageManager.PERMISSION_GRANTED)
+            return true;
+
+        return false;
+    }
+
 }

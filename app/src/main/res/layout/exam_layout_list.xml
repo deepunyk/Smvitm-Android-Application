@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@drawable/exam_back"
+    android:id="@+id/parent_layout"
     android:padding="10dp">
 
     <TextView
