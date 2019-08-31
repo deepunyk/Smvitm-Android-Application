@@ -13,11 +13,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +55,7 @@ public class splash_Activiy extends AppCompatActivity {
     private ArrayList<String> car_head = new ArrayList<>();
     private ArrayList<String> car_sub = new ArrayList<>();
     private int STORAGE_PERMISSION_CODE = 23;
+    ConstraintLayout parent_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,28 +67,51 @@ public class splash_Activiy extends AppCompatActivity {
         img = (ImageView)findViewById(R.id.splash_img);
         bk_img = (ImageView)findViewById(R.id.img);
 
+        parent_layout = (ConstraintLayout)findViewById(R.id.splash_parent_layout);
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
 
         if(isReadStorageAllowed()){
             if (internet) {
                 sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
-                try{
-                    getImages();
-                }
-                catch (Exception e){
-                    Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
+                getImages();
 
-                }
             } else {
                 new AlertDialog.Builder(splash_Activiy.this)
                         .setTitle("No internet connection")
-                        .setMessage("This app requires internet connection. Please switch on your internet and try again.")
+                        .setMessage("You are not connected to internet. Do you want to go offline mode?")
                         .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
                                 System.exit(0);
+                            }
+                        })
+                        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (sharedPreferences.contains("login_Activity")) {
+                                    if(sharedPreferences.contains("Table download")) {
+                                        Intent go = new Intent(splash_Activiy.this, Timetable_offline_activity.class);
+                                        startActivity(go);
+                                        finish();
+                                    }
+                                    else{
+                                        Snackbar snackbar = Snackbar
+                                                .make(parent_layout, "Go to the timetable option using internet once to use the app in offline mode.", Snackbar.LENGTH_LONG)
+                                                .setAction("QUIT", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        finish();
+                                                        System.exit(0);
+                                                    }
+                                                });
+                                        snackbar.show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(splash_Activiy.this, "Please login using internet connection to use the app in offline mode.", Toast.LENGTH_LONG).show();
+                                }
                             }
                         })
                         .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))

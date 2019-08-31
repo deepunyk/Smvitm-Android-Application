@@ -3,9 +3,8 @@
     package="com.xoi.smvitm">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Faculty_passsword_change"/>
+        <activity android:name=".Timetable_offline_activity"></activity>
+        <activity android:name=".Faculty_passsword_change" />
         <activity android:name=".login_faculty" />
-        <activity android:name=".Timetable_new" />
         <activity android:name=".login_Activity" />
         <activity android:name=".Popup_timetable_activity" />
         <activity android:name=".Event_popup_activity" />

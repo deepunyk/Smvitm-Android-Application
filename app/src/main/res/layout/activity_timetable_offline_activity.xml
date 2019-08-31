@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bk"
+    android:orientation="vertical">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50121653" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1.0" />
+
+    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+        android:id="@+id/bubble_nav_view1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:padding="12dp"
+        app:bnc_mode="spread"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_icon="@drawable/ic_monday_calendar_page"
+            app:bt_title=""
+            app:bt_titlePadding="0dp"
+            app:bt_titleSize="13sp" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title=""
+            app:bt_titlePadding="0dp"
+            app:bt_titleSize="13sp"
+            app:bt_icon="@drawable/ic_tuesday_daily_calendar_page"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itm1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title=""
+            app:bt_titlePadding="0dp"
+            app:bt_titleSize="13sp"
+            app:bt_icon="@drawable/ic_wednesday_calendar_daily_page"/>
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itm2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title=""
+            app:bt_titlePadding="0dp"
+            app:bt_titleSize="13sp"
+            app:bt_icon="@drawable/ic_thursday_calendar_daily_page_interface_symbol"/>
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itm3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title=""
+            app:bt_titlePadding="0dp"
+            app:bt_titleSize="13sp"
+            app:bt_icon="@drawable/ic_friday_daily_calendar_page"/>
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="false"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/light_black"
+            app:bt_shape="@drawable/events_transition"
+            app:bt_title=""
+            app:bt_titleSize="13sp"
+            app:bt_titlePadding="0dp"
+            app:bt_icon="@drawable/ic_saturday_calendar_daily_page_interface_symbol"/>
+
+
+    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubble_nav_view1" />
+
+</android.support.constraint.ConstraintLayout>
