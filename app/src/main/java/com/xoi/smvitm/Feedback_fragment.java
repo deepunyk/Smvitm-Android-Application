@@ -74,7 +74,7 @@ public class Feedback_fragment extends Fragment {
     }
 
     private void putFeedback(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbwJDX0DdoKYO0PAUAgNHCbqJPtO6vPmI2BvLvi4EQBgzMMFjGY/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbwoo8EiFlBxI5dzlZh1Vcg8SLkMS6b6sAXc0kHIM7s0ufet9rc/exec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

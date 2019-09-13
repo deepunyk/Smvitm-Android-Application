@@ -10,16 +10,14 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/nav_img"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/nav_user_profile_icon"
         app:layout_constraintBottom_toTopOf="@+id/guideline34"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline36"
         app:layout_constraintVertical_bias="1.0" />
@@ -31,7 +29,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/convergence"
-        android:text="Deepak Nayak"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,17 +57,16 @@
 
     <com.tomer.fadingtextview.FadingTextView
         android:id="@+id/header_branch"
-        app:timeout="2000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/basic"
-        android:text="CSE"
         android:textColor="@color/white"
         android:textColorLink="@color/white"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/header_name"
         app:layout_constraintStart_toStartOf="@+id/header_name"
-        app:layout_constraintTop_toBottomOf="@+id/header_name" />
+        app:layout_constraintTop_toBottomOf="@+id/header_name"
+        app:timeout="2000" />
 
 </android.support.constraint.ConstraintLayout>

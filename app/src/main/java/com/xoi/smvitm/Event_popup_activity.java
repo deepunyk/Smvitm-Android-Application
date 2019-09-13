@@ -21,7 +21,7 @@ import org.w3c.dom.Text;
 
 public class Event_popup_activity extends AppCompatActivity {
 
-    TextView title, conduct, date;
+    TextView title, conduct, date, register;
     ExpandableTextView details;
     Button brochure;
     ImageView img;
@@ -34,6 +34,7 @@ public class Event_popup_activity extends AppCompatActivity {
         img = (ImageView)findViewById(R.id.pop_img);
         title = (TextView)findViewById(R.id.pop_title);
         conduct = (TextView)findViewById(R.id.pop_conduct);
+        register = (TextView)findViewById(R.id.pop_register);
         date = (TextView)findViewById(R.id.pop_date);
         brochure = (Button) findViewById(R.id.pop_brochure);
         details = (ExpandableTextView) findViewById(R.id.pop_details);
@@ -47,6 +48,7 @@ public class Event_popup_activity extends AppCompatActivity {
         final String brochure_txt = intent.getExtras().getString("brochure");
         String details_txt = intent.getExtras().getString("detail");
         String img_txt = intent.getExtras().getString("image");
+        final String register_txt = intent.getExtras().getString("register");
 
         Glide.with(this).load(img_txt).into(img);
         title.setText(title_txt);
@@ -79,6 +81,16 @@ public class Event_popup_activity extends AppCompatActivity {
             }
         });
 
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(register_txt));
+                startActivity(browserIntent);
+            }
+        });
 
+        if(register_txt.equals("-")){
+            register.setVisibility(View.GONE);
+        }
     }
 }

@@ -119,7 +119,7 @@ public class Calendar_fragment extends Fragment implements IRefreshStatus {
 
 
     private void getCalendar() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbwXKu5SqHcngKxUjUp-g4-xG81Nm3suTrzQKehVboJu4RgMM_0/exec?action=getCalendar",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbyQ3bHh_F0kv2PlHYjk7jAcUqQ-cehnMCL6FhGOEEeBXfYnPky_/exec?action=getCalendar",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

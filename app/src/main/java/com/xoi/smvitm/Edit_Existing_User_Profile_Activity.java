@@ -3,10 +3,7 @@ package com.xoi.smvitm;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,22 +24,32 @@ import com.android.volley.toolbox.Volley;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import in.goodiebag.carouselpicker.CarouselPicker;
 
 public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     String student_branch, student_email, student_usn, student_semester, student_section, student_name;
+    int student_dp, image_pos;
     EditText name;
-    TextView branch, usn;
+    TextView branch, usn, change_dp_txt, usr_dp_txt;
     MaterialSpinner section, semester;
     ActionProcessButton submit;
     String[] section_list = {"A" , "B" , "C"};
     String[] semester_list = {"1" , "3" , "5" , "7"};
+    int[] profile_pic_loc = {R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr4,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10};
     int section_index, semester_index;
     ImageView user_dp;
     Button back;
+    CarouselPicker carouselPicker;
+    List<CarouselPicker.PickerItem> imageItems = new ArrayList<>();
+    Button user_dp_select_but;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,10 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         submit = (ActionProcessButton) findViewById(R.id.submit);
         back = (Button)findViewById(R.id.back);
         user_dp = (ImageView)findViewById(R.id.user_profile_pic);
-
+        carouselPicker = (CarouselPicker) findViewById(R.id.dp_select);
+        change_dp_txt = (TextView)findViewById(R.id.change_dp_txt);
+        user_dp_select_but = (Button)findViewById(R.id.user_dp_select_but);
+        usr_dp_txt = (TextView) findViewById(R.id.usr_dp_txt);
         submit.setMode(ActionProcessButton.Mode.ENDLESS);
 
         section.setItems(section_list);
@@ -70,6 +80,7 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         student_semester = sharedPreferences.getString("Student sem", "");
         student_section = sharedPreferences.getString("Student section", "");
         student_name = sharedPreferences.getString("Student name", "");
+        student_dp = sharedPreferences.getInt("Student dp", 0);
 
         section_index = getListIndex(section_list, student_section);
         semester_index = getListIndex(semester_list,student_semester);
@@ -79,6 +90,21 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         usn.setText(student_usn);
         semester.setSelectedIndex(semester_index);
         section.setSelectedIndex(section_index);
+        user_dp.setImageResource(profile_pic_loc[student_dp]);
+
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr1));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr2));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr3));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr4));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr5));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr6));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr7));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr8));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr9));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr10));
+
+        CarouselPicker.CarouselViewAdapter imageAdapter = new CarouselPicker.CarouselViewAdapter(this, imageItems, 0);
+        carouselPicker.setAdapter(imageAdapter);
 
         section.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
@@ -120,6 +146,49 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
                 startActivity(go);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+            }
+        });
+
+        change_dp_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                carouselPicker.setVisibility(View.VISIBLE);
+                user_dp_select_but.setVisibility(View.VISIBLE);
+                usr_dp_txt.setVisibility(View.VISIBLE);
+                submit.setVisibility(View.GONE);
+                back.setVisibility(View.GONE);
+                carouselPicker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        image_pos = position;
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+            }
+        });
+
+        user_dp_select_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user_dp_select_but.setVisibility(View.GONE);
+                sharedPreferences.edit().putInt("Student dp", image_pos).apply();
+                carouselPicker.setVisibility(View.GONE);
+                submit.setVisibility(View.VISIBLE);
+                back.setVisibility(View.VISIBLE);
+                usr_dp_txt.setVisibility(View.GONE);
+                user_dp.setImageResource(profile_pic_loc[image_pos]);
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
     }

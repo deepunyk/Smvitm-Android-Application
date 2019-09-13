@@ -64,62 +64,55 @@ public class splash_Activiy extends AppCompatActivity {
 
         internet = checkInternetConnection();
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
-        img = (ImageView)findViewById(R.id.splash_img);
-        bk_img = (ImageView)findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.splash_img);
+        bk_img = (ImageView) findViewById(R.id.img);
 
-        parent_layout = (ConstraintLayout)findViewById(R.id.splash_parent_layout);
+        parent_layout = (ConstraintLayout) findViewById(R.id.splash_parent_layout);
         img.animate().alpha(1).setDuration(2000);
         bk_img.animate().alpha(1).setDuration(500);
 
-        if(isReadStorageAllowed()){
-            if (internet) {
-                sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
-                getImages();
+        if (internet) {
+            sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
+            getImages();
 
-            } else {
-                new AlertDialog.Builder(splash_Activiy.this)
-                        .setTitle("No internet connection")
-                        .setMessage("You are not connected to internet. Do you want to go offline mode?")
-                        .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                System.exit(0);
-                            }
-                        })
-                        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (sharedPreferences.contains("login_Activity")) {
-                                    if(sharedPreferences.contains("Table download")) {
-                                        Intent go = new Intent(splash_Activiy.this, Timetable_offline_activity.class);
-                                        startActivity(go);
-                                        finish();
-                                    }
-                                    else{
-                                        Snackbar snackbar = Snackbar
-                                                .make(parent_layout, "Go to the timetable option using internet once to use the app in offline mode.", Snackbar.LENGTH_LONG)
-                                                .setAction("QUIT", new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        finish();
-                                                        System.exit(0);
-                                                    }
-                                                });
-                                        snackbar.show();
-                                    }
+        } else {
+            new AlertDialog.Builder(splash_Activiy.this)
+                    .setTitle("No internet connection")
+                    .setMessage("You are not connected to internet. Do you want to go offline mode?")
+                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            System.exit(0);
+                        }
+                    })
+                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (sharedPreferences.contains("login_Activity")) {
+                                if (sharedPreferences.contains("Table download")) {
+                                    Intent go = new Intent(splash_Activiy.this, Timetable_offline_activity.class);
+                                    startActivity(go);
+                                    finish();
+                                } else {
+                                    Snackbar snackbar = Snackbar
+                                            .make(parent_layout, "Go to the timetable option using internet once to use the app in offline mode.", Snackbar.LENGTH_LONG)
+                                            .setAction("QUIT", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    finish();
+                                                    System.exit(0);
+                                                }
+                                            });
+                                    snackbar.show();
                                 }
-                                else{
-                                    Toast.makeText(splash_Activiy.this, "Please login using internet connection to use the app in offline mode.", Toast.LENGTH_LONG).show();
-                                }
+                            } else {
+                                Toast.makeText(splash_Activiy.this, "Please login using internet connection to use the app in offline mode.", Toast.LENGTH_LONG).show();
                             }
-                        })
-                        .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
-                        .show();
-            }
-        }
-        else {
-            requestStoragePermission();
+                        }
+                    })
+                    .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
+                    .show();
         }
     }
 
@@ -134,7 +127,7 @@ public class splash_Activiy extends AppCompatActivity {
     }
 
     private void getImages() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycby43WKcwcdUyDKlYKf3z5I6-5lzeEak5Pa46UBXRK3qRIHm7W0/exec?action=getImages",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbwt2fEXvGUdOgIiG8P34esTJwIi6sNtTteQEmscq-JiymDwi-ad/exec?action=getImages",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -174,8 +167,7 @@ public class splash_Activiy extends AppCompatActivity {
                 sharedPreferences.edit().putString("Main carousel link", ObjectSerializer.serialize(img_urls)).apply();
                 sharedPreferences.edit().putString("Main carousel head", ObjectSerializer.serialize(car_head)).apply();
                 sharedPreferences.edit().putString("Main carousel sub", ObjectSerializer.serialize(car_sub)).apply();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
             }
             if (!sharedPreferences.contains("login_Activity")) {
                 Intent go = new Intent(splash_Activiy.this, login_Activity.class);
@@ -191,52 +183,6 @@ public class splash_Activiy extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    //Requesting permission
-    private void requestStoragePermission(){
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-
-        }
-
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == STORAGE_PERMISSION_CODE){
-
-            if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if (internet) {
-                    sharedPreferences.edit().putString("Internet Connection", "Yes").apply();
-                    getImages();
-                } else {
-                    new AlertDialog.Builder(splash_Activiy.this)
-                            .setTitle("No internet connection")
-                            .setMessage("This app requires internet connection. Please switch on your internet and try again.")
-                            .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                    System.exit(0);
-                                }
-                            })
-                            .setIcon(getResources().getDrawable(R.drawable.nointernet_icon))
-                            .show();
-                }
-            }else{
-                Toast.makeText(this,"Oops you just denied the permission, for the app to run please allow the app to access the storage",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    private boolean isReadStorageAllowed() {
-        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (result == PackageManager.PERMISSION_GRANTED)
-            return true;
-
-        return false;
     }
 
 }

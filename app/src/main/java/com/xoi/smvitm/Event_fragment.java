@@ -46,6 +46,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     private ArrayList<String> details = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
     private ArrayList<String> brochures = new ArrayList<>();
+    private ArrayList<String> regLinks = new ArrayList<>();
 
     View view;
     SharedPreferences sharedPreferences;
@@ -53,7 +54,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
     Button refresh;
     RecyclerRefreshLayout refreshLayout;
     RecyclerView recyclerView;
-    String url = "https://script.google.com/macros/s/AKfycbxmtou-2wG8wZA8JZlaCgcW_Ky4baECBIpQYX39PsOx30SWOyc/exec?action=getEvents";
+    String url = "https://script.google.com/macros/s/AKfycbz1mglU37AdtXo4AZPdX0BozmDoG8y8ROFGqSoxgLSX0JW94hA/exec?action=getEvents";
     SpinKitView load_an;
     TextView load_txt;
 
@@ -86,6 +87,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
         dates.removeAll(dates);
         conducts.removeAll(conducts);
         details.removeAll(details);
+        regLinks.removeAll(regLinks);
         getCirculars();
         refreshing();
     }
@@ -134,6 +136,8 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
                 dates.add(date_json);
                 String brochure_json = jo.getString("brochure");
                 brochures.add(brochure_json);
+                String register_json = jo.getString("register");
+                regLinks.add(register_json);
             }
             if(titles.get(0).equals("-")){
                 noData();
@@ -152,7 +156,7 @@ public class Event_fragment extends Fragment implements IRefreshStatus {
 
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        event_recycler_view_adapter adapter = new event_recycler_view_adapter(titles, descriptions, imgLinks,conducts,details,dates, brochures,getActivity());
+        event_recycler_view_adapter adapter = new event_recycler_view_adapter(titles, descriptions, imgLinks,conducts,details,dates, brochures,regLinks,getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshLayout.setRefreshing(false);

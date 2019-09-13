@@ -295,11 +295,12 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="32dp"
+                android:tint="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/guideline51"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline52"
-                app:srcCompat="@drawable/ic_attendance_white_icn" />
+                app:srcCompat="@drawable/ic_feedback" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline51"
@@ -321,7 +322,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:fontFamily="@font/asap_medium"
-                android:text="ATTENDANCE"
+                android:text="College Feed"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"

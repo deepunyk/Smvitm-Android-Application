@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     long backPressedTime;
     public static NavigationView navigationView;
     String profile, photo;
+    ImageView nav_img;
+    int[] profile_pic_loc = {R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr4,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10};
+    int student_dp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         View hView = navigationView.getHeaderView(0);
         header_name = (TextView) hView.findViewById(R.id.header_name);
         header_branch = (FadingTextView) hView.findViewById(R.id.header_branch);
+        nav_img = (ImageView)hView.findViewById(R.id.nav_img);
+
+
         if (profile.equals("1")) {
             String student_name = sharedPreferences.getString("Student name", "");
             String student_sem = sharedPreferences.getString("Student sem", "");
@@ -79,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
             String student_section = sharedPreferences.getString("Student section", "");
             student_sem = student_sem + " " + student_section;
             String student_usn = sharedPreferences.getString("Student usn", "");
+            student_dp = sharedPreferences.getInt("Student dp", 0);
             String[] array_txt = {student_branch, student_sem, student_usn};
+            nav_img.setBackground(getResources().getDrawable(profile_pic_loc[student_dp]));
 
             header_name.setText(student_name);
             header_branch.setTexts(array_txt);

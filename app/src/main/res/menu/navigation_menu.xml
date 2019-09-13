@@ -20,7 +20,7 @@
             android:title="Circulars"/>
         <item
             android:id="@+id/exam_nav"
-            android:icon="@drawable/ic_workshop"
+            android:icon="@drawable/ic_ex_nav"
             android:title="Exams"/>
         <item
             android:id="@+id/faculty_nav"

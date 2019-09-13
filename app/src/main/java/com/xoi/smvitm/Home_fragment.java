@@ -149,19 +149,14 @@ public class Home_fragment extends Fragment {
         attendance_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(profile.equals("1")) {
-                    Fragment fragment = new Attendance_fragment();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.contentContainer, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    MainActivity.navigationView.setCheckedItem(R.id.attendance_nav);
-                    toolbar.setTitle("Attendance");
-                }
-                else{
-                    Toast.makeText(getActivity(), "This feature is currently not available for faculties", Toast.LENGTH_SHORT).show();
-                }
+                Fragment fragment = new Feed_fragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                MainActivity.navigationView.setCheckedItem(R.id.home_nav);
+                toolbar.setTitle("College Feed");
 
             }
         });

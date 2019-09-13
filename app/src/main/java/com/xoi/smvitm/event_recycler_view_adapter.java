@@ -26,9 +26,10 @@ public class event_recycler_view_adapter extends RecyclerView.Adapter<event_recy
     private ArrayList<String> details = new ArrayList<String>();
     private ArrayList<String> dates = new ArrayList<String>();
     private ArrayList<String> brochures = new ArrayList<String>();
+    private ArrayList<String> regLinks = new ArrayList<String>();
     private Context mContext;
 
-    public event_recycler_view_adapter(ArrayList<String> titles, ArrayList<String> descriptions, ArrayList<String> imgLinks, ArrayList<String> conducts, ArrayList<String> details, ArrayList<String> dates, ArrayList<String> brochures, Context mContext) {
+    public event_recycler_view_adapter(ArrayList<String> titles, ArrayList<String> descriptions, ArrayList<String> imgLinks, ArrayList<String> conducts, ArrayList<String> details, ArrayList<String> dates, ArrayList<String> brochures,ArrayList<String> regLinks, Context mContext) {
         this.titles = titles;
         this.descriptions = descriptions;
         this.imgLinks = imgLinks;
@@ -36,6 +37,7 @@ public class event_recycler_view_adapter extends RecyclerView.Adapter<event_recy
         this.details = details;
         this.dates = dates;
         this.brochures = brochures;
+        this.regLinks = regLinks;
         this.mContext = mContext;
     }
 
@@ -63,6 +65,7 @@ public class event_recycler_view_adapter extends RecyclerView.Adapter<event_recy
                 go.putExtra("date", dates.get(i).toString());
                 go.putExtra("brochure", brochures.get(i).toString());
                 go.putExtra("image", imgLinks.get(i).toString());
+                go.putExtra("register", regLinks.get(i).toString());
                 mContext.startActivity(go);
             }
         });

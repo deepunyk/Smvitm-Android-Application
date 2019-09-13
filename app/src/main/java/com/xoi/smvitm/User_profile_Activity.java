@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,9 @@ public class User_profile_Activity extends AppCompatActivity {
     Toolbar toolbar;
     String student_name, student_usn, student_branch, student_sem, student_section;
     SharedPreferences sharedPreferences;
+    int[] profile_pic_loc = {R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr4,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10};
+    int student_dp;
+    ImageView dp_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class User_profile_Activity extends AppCompatActivity {
         branch = (TextView)findViewById(R.id.branch);
         sem = (TextView)findViewById(R.id.sem);
         section = (TextView)findViewById(R.id.section);
+        dp_img = (ImageView)findViewById(R.id.Fphoto);
 
         sharedPreferences = this.getSharedPreferences("com.xoi.smvitm", Context.MODE_PRIVATE);
         student_usn = sharedPreferences.getString("stud_usn", "");
@@ -66,7 +71,9 @@ public class User_profile_Activity extends AppCompatActivity {
             student_sem = sharedPreferences.getString("Student sem", "");
             student_name = sharedPreferences.getString("Student name", "");
             student_usn = sharedPreferences.getString("Student usn", "");
+            student_dp = sharedPreferences.getInt("Student dp", 0);
 
+            dp_img.setImageResource(profile_pic_loc[student_dp]);
             usn.setText(student_usn);
             sem.setText(student_sem);
             section.setText(student_section);

@@ -86,7 +86,7 @@ public class Circular_fragment extends Fragment implements IRefreshStatus {
         refreshing();
     }
     private void getCirculars() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxIpWEw0QJ5FEc_106HZqOS6DD2QKpRdoZ1nLmUxDyda-v8M-g/exec?action=getCirculars",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbzkjCbKzABJs_gvrsxfcoiNnZVt-csKooFuxPjNyeBC2G3_kKI/exec?action=getCirculars",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
