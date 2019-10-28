@@ -42,13 +42,15 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
     ActionProcessButton submit;
     String[] section_list = {"A" , "B" , "C"};
     String[] semester_list = {"1" , "3" , "5" , "7"};
-    int[] profile_pic_loc = {R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr4,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10};
+    int[] profile_pic_loc = {R.drawable.ic_usrpr4,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr15,R.drawable.ic_usrpr16,R.drawable.ic_usrpr17,R.drawable.ic_usrpr18,R.drawable.ic_usrpr19,R.drawable.ic_usrpr20,R.drawable.ic_usrpr21,R.drawable.ic_usrpr22,R.drawable.ic_usrpr23,R.drawable.ic_usrpr24,R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10,R.drawable.ic_usrpr11,R.drawable.ic_usrpr12,R.drawable.ic_usrpr13,R.drawable.ic_usrpr14,R.drawable.ic_usrpr25};
     int section_index, semester_index;
     ImageView user_dp;
     Button back;
     CarouselPicker carouselPicker;
     List<CarouselPicker.PickerItem> imageItems = new ArrayList<>();
-    Button user_dp_select_but;
+    Button user_dp_select_but, user_gender_select_but;
+    int genCheck = 1;
+    View rectView;
 
 
     @Override
@@ -68,7 +70,9 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         change_dp_txt = (TextView)findViewById(R.id.change_dp_txt);
         user_dp_select_but = (Button)findViewById(R.id.user_dp_select_but);
         usr_dp_txt = (TextView) findViewById(R.id.usr_dp_txt);
+        user_gender_select_but = (Button)findViewById(R.id.user_gender_select_but);
         submit.setMode(ActionProcessButton.Mode.ENDLESS);
+        rectView = (View)findViewById(R.id.rectView);
 
         section.setItems(section_list);
         semester.setItems(semester_list);
@@ -92,16 +96,7 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         section.setSelectedIndex(section_index);
         user_dp.setImageResource(profile_pic_loc[student_dp]);
 
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr1));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr2));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr3));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr4));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr5));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr6));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr7));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr8));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr9));
-        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr10));
+        addImages();
 
         CarouselPicker.CarouselViewAdapter imageAdapter = new CarouselPicker.CarouselViewAdapter(this, imageItems, 0);
         carouselPicker.setAdapter(imageAdapter);
@@ -152,11 +147,14 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         change_dp_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user_dp.setVisibility(View.GONE);
                 carouselPicker.setVisibility(View.VISIBLE);
                 user_dp_select_but.setVisibility(View.VISIBLE);
                 usr_dp_txt.setVisibility(View.VISIBLE);
                 submit.setVisibility(View.GONE);
+                rectView.setVisibility(View.VISIBLE);
                 back.setVisibility(View.GONE);
+                user_gender_select_but.setVisibility(View.VISIBLE);
                 carouselPicker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -179,18 +177,47 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         user_dp_select_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user_dp_select_but.setVisibility(View.GONE);
-                sharedPreferences.edit().putInt("Student dp", image_pos).apply();
+                if(genCheck == 1) {
+                    sharedPreferences.edit().putInt("Student dp", image_pos).apply();
+                }
+                else{
+                    sharedPreferences.edit().putInt("Student dp", image_pos+13).apply();
+
+                }
+                /*user_dp_select_but.setVisibility(View.GONE);
                 carouselPicker.setVisibility(View.GONE);
                 submit.setVisibility(View.VISIBLE);
                 back.setVisibility(View.VISIBLE);
                 usr_dp_txt.setVisibility(View.GONE);
-                user_dp.setImageResource(profile_pic_loc[image_pos]);
+                user_dp.setImageResource(profile_pic_loc[image_pos]);*/
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
             }
         });
+
+        user_gender_select_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeGender();
+            }
+        });
+    }
+
+    public void addImages(){
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr4));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr7));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr8));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr15));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr16));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr17));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr18));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr19));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr20));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr21));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr22));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr23));
+        imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr24));
     }
 
     private void addNewUserDetails() {
@@ -257,6 +284,68 @@ public class Edit_Existing_User_Profile_Activity extends AppCompatActivity {
         this.startActivity(go);
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+    }
+
+    public void changeGender(){
+        if(genCheck == 0){
+            genCheck = 1;
+            imageItems.remove(11);
+            imageItems.remove(10);
+            imageItems.remove(9);
+            imageItems.remove(8);
+            imageItems.remove(7);
+            imageItems.remove(6);
+            imageItems.remove(5);
+            imageItems.remove(4);
+            imageItems.remove(3);
+            imageItems.remove(2);
+            imageItems.remove(1);
+            imageItems.remove(0);
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr4));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr7));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr8));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr15));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr16));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr17));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr18));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr19));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr20));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr21));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr22));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr23));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr24));
+
+        }
+        else{
+            genCheck = 0;
+            imageItems.remove(12);
+            imageItems.remove(11);
+            imageItems.remove(10);
+            imageItems.remove(9);
+            imageItems.remove(8);
+            imageItems.remove(7);
+            imageItems.remove(6);
+            imageItems.remove(5);
+            imageItems.remove(4);
+            imageItems.remove(3);
+            imageItems.remove(2);
+            imageItems.remove(1);
+            imageItems.remove(0);
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr1));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr2));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr3));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr5));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr6));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr9));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr10));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr11));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr12));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr13));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr14));
+            imageItems.add(new CarouselPicker.DrawableItem(R.drawable.ic_usrpr25));
+        }
+        CarouselPicker.CarouselViewAdapter imageAdapter = new CarouselPicker.CarouselViewAdapter(this, imageItems, 0);
+        carouselPicker.setAdapter(imageAdapter);
     }
 
 }

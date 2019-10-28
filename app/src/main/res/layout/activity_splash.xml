@@ -2,17 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bk"
-    tools:context=".splash_Activiy"
-    android:id="@+id/splash_parent_layout">
+    tools:context=".splash_Activiy">
 
     <ImageView
         android:id="@+id/img"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:alpha="0"
+        android:alpha="1"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,14 +38,13 @@
         android:id="@+id/splash_img"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="25dp"
-        android:alpha="0"
+        android:alpha="1"
         app:layout_constraintBottom_toBottomOf="@+id/img"
         app:layout_constraintEnd_toEndOf="@+id/img"
         app:layout_constraintStart_toStartOf="@+id/img"
         app:layout_constraintTop_toTopOf="@+id/img"
         app:srcCompat="@drawable/college_logo" />
+
 </android.support.constraint.ConstraintLayout>

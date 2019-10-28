@@ -136,14 +136,14 @@ public class Home_fragment extends Fragment {
         event_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new Event_fragment();
+                Fragment fragment = new qp_select_fragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contentContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 MainActivity.navigationView.setCheckedItem(R.id.events_nav);
-                toolbar.setTitle("Events");
+                toolbar.setTitle("Question Papers");
             }
         });
         attendance_home.setOnClickListener(new View.OnClickListener() {

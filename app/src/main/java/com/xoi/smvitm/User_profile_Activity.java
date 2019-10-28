@@ -43,7 +43,7 @@ public class User_profile_Activity extends AppCompatActivity {
     Toolbar toolbar;
     String student_name, student_usn, student_branch, student_sem, student_section;
     SharedPreferences sharedPreferences;
-    int[] profile_pic_loc = {R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr4,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10};
+    int[] profile_pic_loc = {R.drawable.ic_usrpr4,R.drawable.ic_usrpr7,R.drawable.ic_usrpr8,R.drawable.ic_usrpr15,R.drawable.ic_usrpr16,R.drawable.ic_usrpr17,R.drawable.ic_usrpr18,R.drawable.ic_usrpr19,R.drawable.ic_usrpr20,R.drawable.ic_usrpr21,R.drawable.ic_usrpr22,R.drawable.ic_usrpr23,R.drawable.ic_usrpr24,R.drawable.ic_usrpr1,R.drawable.ic_usrpr2,R.drawable.ic_usrpr3,R.drawable.ic_usrpr5,R.drawable.ic_usrpr6,R.drawable.ic_usrpr9,R.drawable.ic_usrpr10,R.drawable.ic_usrpr11,R.drawable.ic_usrpr12,R.drawable.ic_usrpr13,R.drawable.ic_usrpr14,R.drawable.ic_usrpr25};
     int student_dp;
     ImageView dp_img;
 

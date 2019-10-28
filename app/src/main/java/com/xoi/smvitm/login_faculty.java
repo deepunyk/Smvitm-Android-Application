@@ -73,66 +73,54 @@ public class login_faculty extends AppCompatActivity {
     private void getBranch(){
         try {
             branch = email.substring(email.indexOf(".") + 1, email.indexOf("@"));
-            if (branch.equals("cs")) {
-                branch = "cse";
-            } else if (branch.equals("ec")) {
-                branch = "ece";
-            } else if (branch.equals("mech")) {
-                branch = "mech";
-            } else if (branch.equals("civil")) {
-                branch = "civil";
-            } else if (branch.equals("maths") || branch.equals("physics") || branch.equals("chemistry")) {
-                branch = "basic";
-            } else {
+            if (branch.equals("lec")) {
+                branch = "lec";
+            }else {
                 branch = "all";
             }
         }
         catch (Exception e){
             branch = "all";
         }
-        loginFaculty();
+        login();
     }
-    private void  loginFaculty() {
+    private void  login() {
 
-        loading = ProgressDialog.show(this,"Fetching faculty details","Please wait");
+        loading = ProgressDialog.show(this,"Authenticating","Please wait");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxm3DdKNuviEY4r2HO4iEnPdssmYLdgFaqreP06JQ0AFEjHNQ/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbwgxAthLnaW8osA8yMLP4pTzBXTBbNGeVK0fYIhCnsW02RyrQ_l/exec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.equals("No user found")){
-                            Toast.makeText(login_faculty.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(login_faculty.this, ""+response, Toast.LENGTH_SHORT).show();
+                        fac_name = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_desig = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_branch = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_info = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_email = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_photo = response.substring(0, response.indexOf(","));
+                        response = response.substring(response.indexOf(",") + 1, response.length());
+                        fac_pass = response;
+                        if(pass.equals(fac_pass)){
+                            Toast.makeText(login_faculty.this, "Success", Toast.LENGTH_SHORT).show();
+                            sharedPreferences.edit().putString("Faculty name", fac_name).apply();
+                            sharedPreferences.edit().putString("Faculty desig", fac_desig).apply();
+                            sharedPreferences.edit().putString("Faculty branch", fac_branch).apply();
+                            sharedPreferences.edit().putString("Faculty info", fac_info).apply();
+                            sharedPreferences.edit().putString("Faculty email", fac_email).apply();
+                            sharedPreferences.edit().putString("Faculty photo", fac_photo).apply();
+                            sharedPreferences.edit().putString("login_Activity", "2").apply();
+                            Intent i = new Intent(login_faculty.this, Faculty_profile_activity.class);
+                            startActivity(i);
+                            finish();
                         }
-                        else {
-                            fac_name = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_desig = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_branch = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_info = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_email = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_photo = response.substring(0, response.indexOf(","));
-                            response = response.substring(response.indexOf(",") + 1, response.length());
-                            fac_pass = response;
-                            if(pass.equals(fac_pass)){
-                                Toast.makeText(login_faculty.this, "Success", Toast.LENGTH_SHORT).show();
-                                sharedPreferences.edit().putString("Faculty name", fac_name).apply();
-                                sharedPreferences.edit().putString("Faculty desig", fac_desig).apply();
-                                sharedPreferences.edit().putString("Faculty branch", fac_branch).apply();
-                                sharedPreferences.edit().putString("Faculty info", fac_info).apply();
-                                sharedPreferences.edit().putString("Faculty email", fac_email).apply();
-                                sharedPreferences.edit().putString("Faculty photo", fac_photo).apply();
-                                sharedPreferences.edit().putString("login_Activity", "2").apply();
-                                Intent i = new Intent(login_faculty.this, Faculty_profile_activity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                            else{
-                                Toast.makeText(login_faculty.this, "Invalid password", Toast.LENGTH_SHORT).show();
-                            }
+                        else{
+                            Toast.makeText(login_faculty.this, "Invalid password", Toast.LENGTH_SHORT).show();
                         }
                         loading.dismiss();
                     }

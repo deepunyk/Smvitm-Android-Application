@@ -107,7 +107,7 @@ public class Feed_fragment extends Fragment implements IRefreshStatus {
         return view;
     }
 
-    private void refresh(){
+    public void refresh(){
         desc.removeAll(desc);
         usn.removeAll(usn);
         date.removeAll(date);
